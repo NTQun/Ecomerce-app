@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../compoments/BlogCard";
+import ProductCard from "../compoments/ProductCard";
 const Home = () => {
   return (
     <>
-      <section className="home-wrapper-1 py-5">
+      <section className="home-wrapper-2 py-5">
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
@@ -65,7 +66,6 @@ const Home = () => {
                     alt="main banner"
                   />
                   <div className="small-banner-content position-absolute">
-                    <h4></h4>
                     <h5>IPAD S13+ pro.</h5>
                     <p>
                       From $999.00 <br />
@@ -203,7 +203,20 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="marque-wrapper py-5">
+      <section className="featured-wrapper py-5 home-wwrapper-2">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <h3 className="section-heading">Featered Colection</h3>
+            </div>
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </div>
+        </div>
+      </section>
+      <section className="marque-wrapper py-5 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
             <div className="col-12">
@@ -236,19 +249,6 @@ const Home = () => {
                 </Marquee>
               </div>
             </div>
-          </div>
-        </div>
-      </section>{" "}
-      <section className="blog-wrapper py-5 home-wwrapper-2">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
-              <h3 className="section-heading">Featered Colection</h3>
-            </div>
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
           </div>
         </div>
       </section>
