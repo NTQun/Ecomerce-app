@@ -217,6 +217,68 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section className="famous-wrapper py-5 home-wrapper-2">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-3">
+              <div className="famous-card position-relative">
+                <img
+                  className="img-fluid"
+                  src="images/famous-01.webp"
+                  alt="famous"
+                />
+                <div className="famous-content position-absolute text-white">
+                  <h5>Big Screen</h5>
+                  <h6>Smart Watch series 7</h6>
+                  <p>From $399 or $16.62/mo. for 24 mo. *</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="famous-card position-relative">
+                <img
+                  className="img-fluid"
+                  src="images/famous-02.webp"
+                  alt="famous"
+                />
+                <div className="famous-content position-absolute text-white">
+                  <h5>Big Screen</h5>
+                  <h6>Smart Watch series 7</h6>
+                  <p>From $399 or $16.62/mo. for 24 mo. *</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="famous-card position-relative">
+                <img
+                  className="img-fluid"
+                  src="images/famous-03.webp"
+                  alt="famous"
+                />
+                <div className="famous-content position-absolute text-white">
+                  <h5>Big Screen</h5>
+                  <h6>Smart Watch series 7</h6>
+                  <p>From $399 or $16.62/mo. for 24 mo. *</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-3">
+              <div className="famous-card position-relative">
+                <img
+                  className="img-fluid"
+                  src="images/famous-04.webp"
+                  alt="famous"
+                />
+                <div className="famous-content position-absolute text-white">
+                  <h5>Big Screen</h5>
+                  <h6>Smart Watch series 7</h6>
+                  <p>From $399 or $16.62/mo. for 24 mo. *</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="speacial wrapper py-5 home-wrapper-2">
         <div className="container-xxl">
           <div className="row">
