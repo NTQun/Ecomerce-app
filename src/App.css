@@ -323,7 +323,7 @@ product-card:hover .action-bar {
 /* Famous Card */
 .famous-card .famous-content {
   top: 10%;
-  left: 10%;
+  left: 5%;
 }
 .famous-card img {
   border-radius: 10px;
@@ -332,8 +332,10 @@ product-card:hover .action-bar {
   font-size: 13px;
   line-height: 20px;
   font-weight: 400px;
-  color: white;
   margin-bottom: 7px;
+  text-transform: uppercase;
+  color: var(--color-777777);
+  display: inline-block;
 }
 .famous-content h6 {
   font-size: 24px;
