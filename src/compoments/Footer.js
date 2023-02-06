@@ -1,5 +1,5 @@
 import React from "react";
-import { icons } from "react-icons";
+// import { icons } from "react-icons";
 import { Link } from "react-router-dom";
 import { BsLinkedin, BsGithub, BsFacebook } from "react-icons/bs";
 
@@ -54,13 +54,13 @@ const Footer = () => {
                   quanb1910130@student.ctu.edu.vn
                 </a>
                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
-                  <a className="text-white" href="#">
+                  <a to="/" className="text-white" href="#">
                     <BsLinkedin className=" fs-4" />
                   </a>
-                  <a className="text-white" href="#">
+                  <a to="/" className="text-white" href="#">
                     <BsGithub className=" fs-4" />
                   </a>
-                  <a className="text-white" href="#">
+                  <a to="/" className="text-white" href="#">
                     <BsFacebook className=" fs-4" />
                   </a>
                 </div>
