@@ -15,6 +15,7 @@
   --color-777777: #77777777;
   --color-1c1c1b: #1c1c1b;
 }
+
 .set-padding {
   padding: 0 15px;
 }
@@ -254,6 +255,7 @@ footer .input-group-text {
   font-weight: 400;
   color: var(--color-777777);
   padding: 0;
+  box-sizing: inherit;
 }
 .blog-content h5 {
   font-size: 18px;
@@ -473,3 +475,35 @@ footer .input-group-text {
 }
 
 /* Our Store ends Here */
+
+/* Contact page */
+.contact-inner-wrapper {
+  padding: 30px 20px;
+  border-radius: 15px;
+  background-color: white;
+  gap: 15px;
+}
+.contact-inner-wrapper > div {
+  width: 48%;
+}
+.contact-title {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 35px;
+  text-align: left;
+}
+.contact-inner-wrapper form .form-control {
+  background-color: var(--color-f5f5f7);
+  border-radius: 10px;
+  border-color: transparent;
+  padding: 10px;
+}
+.contact-inner-wrapper ul {
+  list-style: none;
+}
+.contact-inner-wrapper address,
+.contact-inner-wrapper a,
+.contact-inner-wrapper p {
+  color: var(--color-777777);
+}
+/* Contact Page ends Here */

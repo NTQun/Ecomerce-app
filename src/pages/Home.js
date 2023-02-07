@@ -357,15 +357,25 @@ const Home = () => {
         </div>
       </section>
       <section className="blog-wrapper py-5 home-wwrapper-2 set-padding">
-        <div className="container-xx">
+        <div className="container-xxl">
           <div className="row">
             <div className="col-12">
               <h3 className="section-heading">Our Latest Blogs</h3>
             </div>
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
-            <BlogCard />
+          </div>
+          <div className="row">
+            <div className="col-3">
+              <BlogCard />
+            </div>
+            <div className="col-3">
+              <BlogCard />
+            </div>
+            <div className="col-3">
+              <BlogCard />
+            </div>
+            <div className="col-3">
+              <BlogCard />
+            </div>
           </div>
         </div>
       </section>

@@ -97,7 +97,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <header className="header-bottom py-3">
+      <header className="header-bottom py-2">
         <div className="container-xx">
           <div className="row set-padding"></div>
           <div className="col-12">
