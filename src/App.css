@@ -15,14 +15,19 @@
   --color-777777: #77777777;
   --color-1c1c1b: #1c1c1b;
 }
+.set-padding {
+  padding: 0 15px;
+}
 .section-heading {
   font-size: 26px;
   line-height: 32px;
+  height: 38px;
   font-weight: 500;
   margin-bottom: 30px;
 }
 .home-wwrapper-2 {
   background-color: var(--color-f5f5f7);
+  padding: 0 15px;
 }
 .card-wrapper {
   background-color: white;
@@ -31,6 +36,9 @@
 }
 body {
   font-family: "Rubik", sans-serif;
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-columns: 100%;
+  width: 100%;
 }
 a {
   text-decoration: none;
@@ -117,6 +125,7 @@ a {
 
 footer {
   background-color: var(--color-232f3e);
+  padding: 20px;
 }
 footer:not(:first-child) {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -265,6 +274,7 @@ footer .input-group-text {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+  width: 100%;
 }
 .product-card .product-image {
   height: 270px;
@@ -284,7 +294,7 @@ footer .input-group-text {
   transition: 0.4s;
   display: block;
 }
-product-card:hover .action-bar {
+.product-card:hover .action-bar {
   right: 15px;
 }
 .product-card .product-details h6 {
@@ -298,6 +308,14 @@ product-card:hover .action-bar {
 .product-card .product-details p.price {
   font-size: 16px;
   color: var(--color-1c1c1b);
+}
+.product-card p.description {
+  font-size: 13px;
+  color: var(--color-777777);
+  margin-right: 20px;
+}
+.products-list {
+  padding: 10px;
 }
 .action-bar {
   top: 10%;
@@ -408,4 +426,50 @@ product-card:hover .action-bar {
 .random-products:first-child {
   border-bottom: 1px solid var(--color-ededed);
 }
+.filter-sort-grid {
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.grid img {
+  height: 35px;
+  width: 35px;
+  background-color: #f2f2f2;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.gr-12 {
+  width: 100%;
+}
+.gr-6 {
+  width: 49%;
+}
+.gr-4 {
+  width: 32%;
+}
+.gr-3 {
+  width: 24%;
+}
+.gr-12 .product-card {
+  display: flex;
+  gap: 20px;
+}
+.gr-6 .product-image {
+  width: 100%;
+}
+.gr-6 .product-image img {
+  margin: auto;
+  display: block;
+}
+.gr-12 .product-card .product-image {
+  width: 270px;
+}
+.gr-12 .product-card .product-image {
+  height: auto;
+}
+.gr-12 .action-bar {
+  top: 17%;
+}
+
 /* Our Store ends Here */

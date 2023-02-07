@@ -4,11 +4,11 @@ import { BsSearch } from "react-icons/bs";
 const Header = () => {
   return (
     <>
-      <header className="header-top-strip py-3">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-6">
-              <p className="text-white mb-0">
+      <header className="header-top-strip py-1">
+        <div className="container-xx">
+          <div className="row set-padding">
+            <div className="col-3 ">
+              <p className="text-white mb-0 ">
                 Free Shipping over 100$ & Free Returns
               </p>
             </div>
@@ -23,26 +23,26 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <header className="header-upper py-3">
-        <div className="container-xxl">
-          <div className="row align-items-center">
-            <div className="col-2">
-              <h2 className="text-white">
-                <Link to="#" className="text-white">
-                  Digitic
+      <header className="header-upper py-2">
+        <div className="container-xx">
+          <div className="row align-items-center set-padding">
+            <div className="col-2 ">
+              <p className="text-white">
+                <Link to="/">
+                  <img src="images/logo.webp" alt="logo" />
                 </Link>
-              </h2>
+              </p>
             </div>
-            <div className="col-5">
+            <div className="col-4">
               <div className="input-group ">
                 <input
                   type="text"
-                  className="form-control py-2"
+                  className="form-control py-0"
                   placeholder="Search Product Here...."
                   aria-label="Search Product Here...."
                   aria-describedby="basic-addon2"
                 />
-                <span className="input-group-text p-3" id="basic-addon2">
+                <span className="input-group-text p-2" id="basic-addon2">
                   <BsSearch className="fs-6" />
                 </span>
               </div>
@@ -98,8 +98,8 @@ const Header = () => {
         </div>
       </header>
       <header className="header-bottom py-3">
-        <div className="container-xxl">
-          <div className="row"></div>
+        <div className="container-xx">
+          <div className="row set-padding"></div>
           <div className="col-12">
             <div className="menu-bottom d-flex align-items-center gap-30">
               <div>
@@ -138,7 +138,7 @@ const Header = () => {
                 <div className="d-flex align-items-center gap-15">
                   <NavLink to="/">Home</NavLink>
                   <NavLink to="/store">Our Store</NavLink>
-                  <NavLink to="/">Blogs</NavLink>
+                  <NavLink to="/blogs">Blogs</NavLink>
                   <NavLink to="/contact">Contact</NavLink>
                 </div>
               </div>

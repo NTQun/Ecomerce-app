@@ -4,7 +4,7 @@ const BreadCrumb = (props) => {
   const { title } = props;
   return (
     <div className="breadcrumb py-4">
-      <div className="container-xxl">
+      <div className="container-xl">
         <div className="row">
           <div className="col-12 d-flex justify-content-center align-items-center">
             <p className="text-center mb-0">

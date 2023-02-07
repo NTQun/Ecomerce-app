@@ -7,9 +7,9 @@ import SpeacialProduct from "../compoments/SpeacialProduct";
 const Home = () => {
   return (
     <>
-      <section className="home-wrapper-2 py-5">
-        <div className="container-xxl">
-          <div className="row">
+      <section className="home-wrapper-2 py-5 set-padding">
+        <div className="container-xx ">
+          <div className="row ">
             <div className="col-6">
               <div className="main-banner position-relative">
                 <img
@@ -93,8 +93,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="home-wrapper-2 py-5">
-        <div className="container-xxl">
+      <section className="home-wrapper-2 py-5 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <div className="service d-flex align-items-center justify-content-between">
@@ -138,8 +138,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="home-wrapper-2 py-5">
-        <div className="container-xxl">
+      <section className="home-wrapper-2 py-5 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <div className="categories flex-wrap d-flex justify-content-between align-items-center">
@@ -204,8 +204,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="featured-wrapper py-5 home-wwrapper-2">
-        <div className="container-xxl">
+      <section className="featured-wrapper py-5 home-wwrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <h3 className="section-heading">Featered Colection</h3>
@@ -217,8 +217,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="famous-wrapper py-5 home-wrapper-2">
-        <div className="container-xxl">
+      <section className="famous-wrapper py-5 home-wrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-3">
               <div className="famous-card position-relative">
@@ -284,8 +284,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="speacial wrapper py-5 home-wrapper-2">
-        <div className="container-xxl">
+      <section className="speacial wrapper py-5 home-wrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <h3 className="section-heading">Special Products</h3>
@@ -299,8 +299,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="popular-wrapper py-5 home-wwrapper-2">
-        <div className="container-xxl">
+      <section className="popular-wrapper py-5 home-wwrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <h3 className="section-heading">Our Popular Products</h3>
@@ -320,8 +320,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="marque-wrapper py-5 home-wrapper-2">
-        <div className="container-xxl">
+      <section className="marque-wrapper py-5 home-wrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <div className="marquee-inner-wrapper card-wrapper">
@@ -356,8 +356,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="blog-wrapper py-5 home-wwrapper-2">
-        <div className="container-xxl">
+      <section className="blog-wrapper py-5 home-wwrapper-2 set-padding">
+        <div className="container-xx">
           <div className="row">
             <div className="col-12">
               <h3 className="section-heading">Our Latest Blogs</h3>
