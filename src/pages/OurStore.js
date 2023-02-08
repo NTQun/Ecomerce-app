@@ -3,6 +3,7 @@ import Meta from "../compoments/meta";
 import BreadCrumb from "../compoments/BreadCrumb";
 import ProductCard from "../compoments/ProductCard";
 import ReactStars from "react-rating-stars-component";
+import Color from "../compoments/Color";
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
   return (
@@ -75,21 +76,10 @@ const OurStore = () => {
                       </div>
                     </div>
                     <h5 className="sub-title">Colors</h5>
-                    <div className="d-flex flex-wrap">
-                      <ul className="colors ps-0">
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                      </ul>
+                    <div>
+                      <Color />
+                      <Color />
+                      <Color />
                     </div>
                     <h5 className="sub-title">Size</h5>
                     <div className="form-check">
