@@ -1,5 +1,5 @@
 import React from "react";
-import Meta from "../compoments/meta";
+import Meta from "../compoments/Meta";
 import BreadCrumb from "../compoments/BreadCrumb";
 import { Link } from "react-router-dom";
 const Signup = () => {
@@ -45,7 +45,9 @@ const Signup = () => {
                   </div>
                   <div>
                     <div className=" mt-3 d-flex justify-content-center align-items-center gap-15">
-                      <button className="button border-0">Signup</button>
+                      <button className="button border-0" type="submit">
+                        Signup
+                      </button>
                     </div>
                     <Link to="/login" className="mt-3 text-info">
                       If you have account. Login

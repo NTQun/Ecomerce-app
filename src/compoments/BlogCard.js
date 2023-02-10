@@ -15,7 +15,7 @@ const BlogCard = () => {
           Crossing phiên bản creepypasta. Animal Crossing phiên bản creepypasta
           có tên Harvest Festival 64,...
         </p>
-        <Link className="button " to="/">
+        <Link className="button " to="/blogs/:id">
           Read more
         </Link>
       </div>

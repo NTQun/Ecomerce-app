@@ -1,6 +1,6 @@
 import React from "react";
 import BreadCrumb from "../compoments/BreadCrumb";
-import Meta from "../compoments/meta";
+import Meta from "../compoments/Meta";
 import { AiFillHome, AiFillPhone, AiTwotoneMail } from "react-icons/ai";
 import { FaInfo } from "react-icons/fa";
 const Contact = () => {

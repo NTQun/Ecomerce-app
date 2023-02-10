@@ -1,5 +1,5 @@
 import React from "react";
-import Meta from "../compoments/meta";
+import Meta from "../compoments/Meta";
 import BreadCrumb from "../compoments/BreadCrumb";
 const Wishlist = () => {
   return (

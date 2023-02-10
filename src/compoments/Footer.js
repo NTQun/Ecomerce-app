@@ -1,21 +1,20 @@
 import React from "react";
-// import { icons } from "react-icons";
+import newsletter from "../images/newsletter.png";
 import { Link } from "react-router-dom";
 import { BsLinkedin, BsGithub, BsFacebook } from "react-icons/bs";
-
 const Footer = () => {
   return (
     <>
-      <footer className="py-4">
-        <div className="container-xx ">
+      <footer className="py-5">
+        <div className="container-xxl ">
           <div className="row align-items-center">
-            <div className="col-5">
+            <div className="col-4">
               <div className="footer-top-data d-flex gap-30 align-items-center">
-                <img src="images/newsletter.png" alt="newsletter" />
+                <img src={newsletter} alt="newsletter" />
                 <h2 className="mb-0 text-white">Sign Up for new letter</h2>
               </div>
             </div>
-            <div className="col-7">
+            <div className="col-6">
               <div className="input-group ">
                 <input
                   type="text"
@@ -69,19 +68,19 @@ const Footer = () => {
             <div className="col-3">
               <h4 className="text-white mb-4">Information</h4>
               <div className="footer-links d-flex flex-column">
-                <Link className="text-white py-2 mb-1" to="">
+                <Link to="/privacy-policy" className="text-white py-2 mb-1">
                   Privacy Policy
                 </Link>
-                <Link className="text-white py-2 mb-1" to="">
+                <Link className="text-white py-2 mb-1" to="/refund-policy">
                   Refund Policy
                 </Link>
-                <Link className="text-white py-2 mb-1" to="">
+                <Link className="text-white py-2 mb-1" to="/shipping-policy">
                   Shipping Policy
                 </Link>
-                <Link className="text-white py-2 mb-1" to="">
+                <Link className="text-white py-2 mb-1" to="/term-conditions">
                   Terms & Condition
                 </Link>
-                <Link className="text-white py-2 mb-1" to="">
+                <Link className="text-white py-2 mb-1" to="/blogs">
                   Blogs
                 </Link>
               </div>

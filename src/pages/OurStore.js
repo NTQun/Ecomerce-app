@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Meta from "../compoments/meta";
+import Meta from "../compoments/Meta";
 import BreadCrumb from "../compoments/BreadCrumb";
 import ProductCard from "../compoments/ProductCard";
 import ReactStars from "react-rating-stars-component";
@@ -132,9 +132,9 @@ const OurStore = () => {
                   <div className="random-products mb-3 d-flex">
                     <div className="w-50">
                       <img
-                        src="images/w-50-1.avif"
+                        src="images/watch.png"
                         className="img-fluid"
-                        alt="headphone"
+                        alt="watch"
                       />
                     </div>
                     <div className="w-50 mb-3">
@@ -154,9 +154,9 @@ const OurStore = () => {
                   <div className="random-products d-flex">
                     <div className="w-50">
                       <img
-                        src="images/w-50-2.avif"
+                        src="images/watch.png"
                         className="img-fluid"
-                        alt="headphone"
+                        alt="watch"
                       />
                     </div>
                     <div className="w-50">

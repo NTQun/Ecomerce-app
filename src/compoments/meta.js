@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import React from "react";
 
-const meta = (props) => {
+const Meta = (props) => {
   return (
     <Helmet>
       <meta charSet="utf-8" />
@@ -10,4 +10,4 @@ const meta = (props) => {
   );
 };
 
-export default meta;
+export default Meta;
