@@ -1,98 +1,98 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import BlogCard from "../compoments/BlogCard";
-import ProductCard from "../compoments/ProductCard";
-import SpeacialProduct from "../compoments/SpeacialProduct";
+import BlogCard from "../components/BlogCard";
+import ProductCard from "../components/ProductCard";
+import SpeacialProduct from "../components/SpecialProduct";
+import Container from "../components/Container";
 const Home = () => {
   return (
     <>
-      <section className="home-wrapper-2 py-5 set-padding">
-        <div className="container-xx ">
-          <div className="row ">
-            <div className="col-6">
-              <div className="main-banner position-relative">
+      <Container class1="home-wrapper-2 py-5 set-padding">
+        <div className="row ">
+          <div className="col-6">
+            <div className="main-banner position-relative">
+              <img
+                src="images/main-banner-1.jpg"
+                className="img-fluid rounded-3"
+                alt="main banner"
+              />
+              <div className="main-banner-content position-absolute">
+                <h4>SUPERCHARGED FOR PROS.</h4>
+                <h5>IPAD S13+ pro.</h5>
+                <p>From $999.00 or $41.62/mo.</p>
+                <Link className="button" to="">
+                  BUY NOW
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="d-flex flex-wrap gap 10 justufy-content-between align-items-center">
+              <div className="small-banner position-relative">
                 <img
-                  src="images/main-banner-1.jpg"
+                  src="images/catbanner-01.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
-                <div className="main-banner-content position-absolute">
+                <div className="small-banner-content position-absolute">
                   <h4>SUPERCHARGED FOR PROS.</h4>
                   <h5>IPAD S13+ pro.</h5>
-                  <p>From $999.00 or $41.62/mo.</p>
-                  <Link className="button" to="">
-                    BUY NOW
-                  </Link>
+                  <p>
+                    From $999.00 <br /> or $41.62/mo.
+                  </p>
                 </div>
               </div>
-            </div>
-            <div className="col-6">
-              <div className="d-flex flex-wrap gap 10 justufy-content-between align-items-center">
-                <div className="small-banner position-relative">
-                  <img
-                    src="images/catbanner-01.jpg"
-                    className="img-fluid rounded-3"
-                    alt="main banner"
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>SUPERCHARGED FOR PROS.</h4>
-                    <h5>IPAD S13+ pro.</h5>
-                    <p>
-                      From $999.00 <br /> or $41.62/mo.
-                    </p>
-                  </div>
-                </div>
 
-                <div className="small-banner position-relative ">
-                  <img
-                    src="images/catbanner-02.jpg"
-                    className="img-fluid rounded-3"
-                    alt="main banner"
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>Best Sake</h4>
-                    <h5>IPAD S13+ pro.</h5>
-                    <p>
-                      From $999.00 <br />
-                      or $41.62/mo.
-                    </p>
-                  </div>
+              <div className="small-banner position-relative ">
+                <img
+                  src="images/catbanner-02.jpg"
+                  className="img-fluid rounded-3"
+                  alt="main banner"
+                />
+                <div className="small-banner-content position-absolute">
+                  <h4>Best Sake</h4>
+                  <h5>IPAD S13+ pro.</h5>
+                  <p>
+                    From $999.00 <br />
+                    or $41.62/mo.
+                  </p>
                 </div>
+              </div>
 
-                <div className="small-banner position-relative">
-                  <img
-                    src="images/catbanner-03.jpg"
-                    className="img-fluid rounded-3"
-                    alt="main banner"
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h5>IPAD S13+ pro.</h5>
-                    <p>
-                      From $999.00 <br />
-                      or $41.62/mo.
-                    </p>
-                  </div>
+              <div className="small-banner position-relative">
+                <img
+                  src="images/catbanner-03.jpg"
+                  className="img-fluid rounded-3"
+                  alt="main banner"
+                />
+                <div className="small-banner-content position-absolute">
+                  <h5>IPAD S13+ pro.</h5>
+                  <p>
+                    From $999.00 <br />
+                    or $41.62/mo.
+                  </p>
                 </div>
-                <div className="small-banner position-relative">
-                  <img
-                    src="images/catbanner-04.jpg"
-                    className="img-fluid rounded-3"
-                    alt="main banner"
-                  />
-                  <div className="small-banner-content position-absolute">
-                    <h4>Best Sake</h4>
-                    <h5>IPAD S13+ pro.</h5>
-                    <p>
-                      From $999.00 <br /> or $41.62/mo.
-                    </p>
-                  </div>
+              </div>
+              <div className="small-banner position-relative">
+                <img
+                  src="images/catbanner-04.jpg"
+                  className="img-fluid rounded-3"
+                  alt="main banner"
+                />
+                <div className="small-banner-content position-absolute">
+                  <h4>Best Sake</h4>
+                  <h5>IPAD S13+ pro.</h5>
+                  <p>
+                    From $999.00 <br /> or $41.62/mo.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </Container>
+
       <section className="home-wrapper-2 py-5 set-padding">
         <div className="container-xx">
           <div className="row">
