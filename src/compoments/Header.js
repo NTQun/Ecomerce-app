@@ -5,7 +5,7 @@ import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
-import menu from "../images/menu.svg";
+// import menu from "../images/menu.svg";
 import logo from "../images/logo.webp";
 const Header = () => {
   return (
