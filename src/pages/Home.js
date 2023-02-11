@@ -274,7 +274,7 @@ const Home = () => {
                 />
                 <div className="famous-content position-absolute text-dark">
                   <h5>
-                    <div class="cms-banner-label">home speakers</div>
+                    <div className="cms-banner-label">home speakers</div>
                   </h5>
                   <h6>Room-filling sound.</h6>
                   <p>From $699 or $116.58/mo. for 12 mo.*</p>

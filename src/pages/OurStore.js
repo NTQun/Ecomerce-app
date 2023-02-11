@@ -183,13 +183,11 @@ const OurStore = () => {
                 <div className="d-flex align-items-center gap-10">
                   <p className="mb-0">Sort By:</p>
                   <select
-                    name="sort_by"
-                    className="facet-filters__sort select__select"
-                    id="SortBy"
-                    aria-describedby="a11y-refresh-page-message">
-                    <option value="manual" selected="selected">
-                      Featured
-                    </option>
+                    name=""
+                    defaultValue={"manula"}
+                    className="form-control form-select"
+                    id="">
+                    <option value="manual">Featured</option>
                     <option value="best-selling">Best selling</option>
                     <option value="title-ascending">Alphabetically, A-Z</option>
                     <option value="title-descending">
