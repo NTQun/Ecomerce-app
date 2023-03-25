@@ -12,13 +12,16 @@ import * as yup from "yup";
 const signUpSchema = yup.object({
   firstname: yup.string().required("Fisrt Name is Required"),
   lastname: yup.string().required("Last Name is Required"),
-  email: yup.string().nullable().email("Email should be valid"),
+  email: yup
+    .string()
+    .email("Email should be valid")
+    .required("Email Address is Required"),
   mobile: yup.string().required("Mobile No is Required"),
   password: yup.string().required("Password is Required"),
 });
 
 const Signup = () => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -29,7 +32,7 @@ const Signup = () => {
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
-      dispath(registerUser(values));
+      dispatch(registerUser(values));
     },
   });
 
