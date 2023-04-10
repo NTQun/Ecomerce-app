@@ -773,3 +773,16 @@ t-review {
   color: var(--color-777777);
 }
 /* Shipping page ends here */
+/* info */
+.info{
+  box-shadow: 0 0 10px #0000001a;
+    padding: 20px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    line-height: 22px;
+}
+.info p{
+  color: #777777;
+
+}
+/* info  end */

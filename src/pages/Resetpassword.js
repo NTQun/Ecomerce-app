@@ -23,14 +23,14 @@ const Resetpassword = () => {
                 <CustomInput
                   type="password"
                   name="confirmpassword"
-                  placeholder="Confim Password"
+                  placeholder="Confirm Password"
                 />
                 <div>
                   <div className=" mt-3 d-flex justify-content-center align-items-center gap-15">
                     <button className="button border-0">OK</button>
                   </div>
                   <Link to="/login" className="mt-3 text-info">
-                    If you have account. Login
+                    If you have account? Login
                   </Link>
                 </div>
               </form>
