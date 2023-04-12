@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { authService } from "./userService";
 
-const getUserfromlocalStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
+const getCustomerfromlocalStorage = localStorage.getItem("customer")
+  ? JSON.parse(localStorage.getItem("customer"))
   : null;
 
 export const registerUser = createAsyncThunk(
@@ -29,7 +29,7 @@ export const loginUser = createAsyncThunk(
 );
 
 const initialState = {
-  user: "",
+  user: getCustomerfromlocalStorage,
   isError: false,
   isLoading: false,
   isSuccess: false,
