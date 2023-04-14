@@ -14,10 +14,9 @@ import { addToWishlist } from "../features/product/productSlice";
 const ProductCard = (props) => {
   const { grid, data } = props;
   const dispatch = useDispatch();
-  console.log(data);
   let location = useLocation();
-  const addToWish = (prodId) => {
-    dispatch(addToWishlist(prodId));
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
   };
   return (
     <>
@@ -28,10 +27,12 @@ const ProductCard = (props) => {
             className={` ${
               location.pathname == "/product" ? `gr-${grid}` : "col-3"
             } `}>
-            <div
-              //     to={`${location.pathname == "/"
-              //   ? "/product/:id"
-              //   : location.pathname == "/product/:id"
+            <Link
+              to={""}
+              // to={`${
+              //   location.pathname == "/"
+              //     ? "/product/:id"
+              //     : location.pathname == "/product/:id"
               //     ? "/product/:id"
               //     : ":id"
               // }`}
@@ -100,7 +101,7 @@ const ProductCard = (props) => {
                   </button>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         );
       })}
