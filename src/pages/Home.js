@@ -1,11 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
 import SpeacialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
+import { getAllBlogs } from "../features/blog/blogSlice";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment/moment";
+
 const Home = () => {
+  const blogState = useSelector((state) => state?.blog?.blog);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getBlogs();
+  }, []);
+  const getBlogs = () => {
+    dispatch(getAllBlogs());
+  };
   return (
     <>
       <Container class1="home-wrapper-2 py-5 set-padding">
@@ -364,18 +376,25 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-3">
-              <BlogCard />
-            </div>
-            <div className="col-3">
-              <BlogCard />
-            </div>
-            <div className="col-3">
-              <BlogCard />
-            </div>
-            <div className="col-3">
-              <BlogCard />
-            </div>
+            {blogState
+              ? blogState?.map((item, index) => {
+                  if (index < 3) {
+                    return (
+                      <div className="col-3 mb-3" key={index}>
+                        <BlogCard
+                          id={item?._id}
+                          title={item?.title}
+                          description={item?.description}
+                          image={item?.images[0]?.url}
+                          date={moment(item?.createdAt).format(
+                            "MMMM Do YYYY, h:mm a"
+                          )}
+                        />
+                      </div>
+                    );
+                  }
+                })
+              : []}
           </div>
         </div>
       </section>

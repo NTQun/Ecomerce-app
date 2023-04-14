@@ -8,7 +8,6 @@ import { getAllBlogs } from "../features/blog/blogSlice";
 import moment from "moment/moment";
 const Blog = () => {
   const blogState = useSelector((state) => state?.blog?.blog);
-  console.log(blogState);
   const dispatch = useDispatch();
   useEffect(() => {
     getBlogs();
