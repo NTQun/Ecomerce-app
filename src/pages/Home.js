@@ -8,15 +8,26 @@ import Container from "../components/Container";
 import { getAllBlogs } from "../features/blog/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
+import { getAllProducts } from "../features/product/productSlice";
+import { addToWishlist } from "../features/product/productSlice";
+import PopularProduct from "../components/PopularProduct";
 
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blog);
+  const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+  };
   useEffect(() => {
     getBlogs();
+    getProducts();
   }, []);
   const getBlogs = () => {
     dispatch(getAllBlogs());
+  };
+  const getProducts = () => {
+    dispatch(getAllProducts());
   };
   return (
     <>
@@ -304,10 +315,22 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <SpeacialProduct />
-            <SpeacialProduct />
-            <SpeacialProduct />
-            <SpeacialProduct />
+            {productState &&
+              productState?.map((item, index) => {
+                if (item.tags === "special") {
+                  return (
+                    <SpeacialProduct
+                      key={index}
+                      title={item?.title}
+                      brand={item?.brand}
+                      totalrating={item?.totalrating.toString()}
+                      price={item?.price}
+                      sold={item?.sold}
+                      quantity={item?.quantity}
+                    />
+                  );
+                }
+              })}
           </div>
         </div>
       </section>
@@ -319,16 +342,25 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-2">
-              <div className="card"></div>
-            </div>
-            <div className="col-2">
-              <div className="card"></div>
-            </div>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {productState &&
+              productState?.map((item, index) => {
+                if (item.tags === "popular") {
+                  return (
+                    <PopularProduct
+                      key={index}
+                      id={item?._id}
+                      title={item?.title}
+                      brand={item?.brand}
+                      totalrating={item?.totalrating.toString()}
+                      price={item?.price}
+                      sold={item?.sold}
+                      quantity={item?.quantity}
+                      description={item?.description}
+                      images={item?.images}
+                    />
+                  );
+                }
+              })}
           </div>
         </div>
       </section>
