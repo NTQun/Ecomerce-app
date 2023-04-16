@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
-import SpeacialProduct from "../components/SpecialProduct";
+import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
 import { getAllBlogs } from "../features/blog/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -324,8 +324,9 @@ const Home = () => {
               productState?.map((item, index) => {
                 if (item.tags === "special") {
                   return (
-                    <SpeacialProduct
+                    <SpecialProduct
                       key={index}
+                      id={item?._id}
                       title={item?.title}
                       brand={item?.brand}
                       totalrating={item?.totalrating.toString()}
@@ -352,16 +353,7 @@ const Home = () => {
                 if (item.tags === "popular") {
                   return (
                     <div key={index} className={"col-3"}>
-                      <Link
-                        to={""}
-                        // to={`${
-                        //   location.pathname == "/"
-                        //     ? "/product/:id"
-                        //     : location.pathname == "/product/:id"
-                        //     ? "/product/:id"
-                        //     : ":id"
-                        // }`}
-                        className="product-card position-relative">
+                      <div className="product-card position-relative">
                         <div className="wishlist-icon position-absolute">
                           <button
                             className="border-0 bg-transparent"
@@ -371,7 +363,11 @@ const Home = () => {
                             <img src={wish} alt="wishlist" />
                           </button>
                         </div>
-                        <div className="product-image">
+                        <div
+                          onClick={(e) => {
+                            navigate("/product/" + item?._id);
+                          }}
+                          className="product-image">
                           <img
                             src={item?.images[0]?.url}
                             className="img-fluid w-100"
@@ -410,7 +406,13 @@ const Home = () => {
 
                           <div className="d-flex flex-column">
                             <button className="border-0 bg-transparent">
-                              <img src={view} alt="view" />
+                              <img
+                                onClick={(e) => {
+                                  navigate("/product/" + item?._id);
+                                }}
+                                src={view}
+                                alt="view"
+                              />
                             </button>
                           </div>
 
@@ -420,7 +422,7 @@ const Home = () => {
                             </button>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     </div>
                   );
                 }

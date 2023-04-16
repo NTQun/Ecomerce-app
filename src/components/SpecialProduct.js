@@ -2,8 +2,8 @@ import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 
-const SpeacialProduct = (props) => {
-  const { title, brand, totalrating, price, sold, quantity } = props;
+const SpecialProduct = (props) => {
+  const { id, title, brand, totalrating, price, sold, quantity } = props;
   return (
     <div className="col-6 mb-3  ">
       <div className="special-product-card">
@@ -46,8 +46,8 @@ const SpeacialProduct = (props) => {
                   aria-valuemax={sold + quantity}></div>
               </div>
             </div>
-            <Link to="" className="button">
-              Add to Cart
+            <Link to={`/product/` + id} className="button">
+              View
             </Link>
           </div>
         </div>
@@ -56,4 +56,4 @@ const SpeacialProduct = (props) => {
   );
 };
 
-export default SpeacialProduct;
+export default SpecialProduct;
