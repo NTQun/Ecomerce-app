@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
 import ProductCard from "../components/ProductCard";
@@ -10,12 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment/moment";
 import { getAllProducts } from "../features/product/productSlice";
 import { addToWishlist } from "../features/product/productSlice";
-import PopularProduct from "../components/PopularProduct";
-
+import wish from "../images/wish.svg";
+import watch2 from "../images/watch-1.avif";
+import ReactStars from "react-rating-stars-component";
+import prodcompare from "../images/prodcompare.svg";
+import addcart from "../images/add-cart.svg";
+import view from "../images/view.svg";
 const Home = () => {
   const blogState = useSelector((state) => state?.blog?.blog);
   const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
   };
@@ -346,18 +351,77 @@ const Home = () => {
               productState?.map((item, index) => {
                 if (item.tags === "popular") {
                   return (
-                    <PopularProduct
-                      key={index}
-                      id={item?._id}
-                      title={item?.title}
-                      brand={item?.brand}
-                      totalrating={item?.totalrating.toString()}
-                      price={item?.price}
-                      sold={item?.sold}
-                      quantity={item?.quantity}
-                      description={item?.description}
-                      images={item?.images}
-                    />
+                    <div key={index} className={"col-3"}>
+                      <Link
+                        to={""}
+                        // to={`${
+                        //   location.pathname == "/"
+                        //     ? "/product/:id"
+                        //     : location.pathname == "/product/:id"
+                        //     ? "/product/:id"
+                        //     : ":id"
+                        // }`}
+                        className="product-card position-relative">
+                        <div className="wishlist-icon position-absolute">
+                          <button
+                            className="border-0 bg-transparent"
+                            onClick={(e) => {
+                              addToWish(item?._id);
+                            }}>
+                            <img src={wish} alt="wishlist" />
+                          </button>
+                        </div>
+                        <div className="product-image">
+                          <img
+                            src={item?.images[0]?.url}
+                            className="img-fluid w-100"
+                            alt="product-image"
+                          />
+                          <img
+                            src={watch2}
+                            className="img-fluid"
+                            alt="product-image"
+                          />
+                        </div>
+                        <div className="product-details">
+                          <h6 className="brand">{item?.brand}</h6>
+                          <h5 className="product-title">{item.title}</h5>
+                          <ReactStars
+                            edit={false}
+                            count={5}
+                            value={item?.totalrating.toString()}
+                            size={24}
+                            isHalf={true}
+                            emptyIcon={<i className="far fa-star"></i>}
+                            halfIcon={<i className="fa fa-star-half-alt"></i>}
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                          />
+
+                          <p className="price">$ {item?.price}</p>
+                        </div>
+
+                        <div className="action-bar position-absolute">
+                          <div className="d-flex flex-column ">
+                            <button className="border-0 bg-transparent">
+                              <img src={prodcompare} alt="compare" />
+                            </button>
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <button className="border-0 bg-transparent">
+                              <img src={view} alt="view" />
+                            </button>
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <button className="border-0 bg-transparent">
+                              <img src={addcart} alt="addcart" />
+                            </button>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
                   );
                 }
               })}
