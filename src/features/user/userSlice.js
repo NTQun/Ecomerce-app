@@ -150,7 +150,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
         if (state.isError) {
-          toast.success("Wrong Something");
+          toast.error("Wrong Something");
         }
       })
       .addCase(getUserCart.pending, (state) => {
@@ -168,7 +168,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
         if (state.isError) {
-          toast.success("Wrong Something");
+          toast.error("Wrong Something");
         }
       });
   },
