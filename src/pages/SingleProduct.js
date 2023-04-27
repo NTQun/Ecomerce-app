@@ -21,16 +21,18 @@ const SingleProduct = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.auth.cartProducts);
+  const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.singleProduct);
   useEffect(() => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart());
   }, []);
   useEffect(() => {
-    for (let index = 0; index < cartState.length; index++) {
-      if (getProductId === cartState[index]?.productId?._id) {
-        setAlreadyAdded(true);
+    if (cartState) {
+      for (let index = 0; index < cartState.length; index++) {
+        if (getProductId === cartState[index]?.productId?._id) {
+          setAlreadyAdded(true);
+        }
       }
     }
   }, []);

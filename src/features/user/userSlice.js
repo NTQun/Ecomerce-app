@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { authService } from "./userService";
 
@@ -68,6 +68,17 @@ export const deleteCartProduct = createAsyncThunk(
     }
   }
 );
+export const updateCartProduct = createAsyncThunk(
+  "user/cart/product/update",
+  async (cartDetail, thunkAPI) => {
+    try {
+      return await authService.updateProductFromCart(cartDetail);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const resetState = createAction("Reset_all");
 
 const initialState = {
   user: getCustomerfromlocalStorage,
@@ -194,6 +205,27 @@ export const authSlice = createSlice({
         }
       })
       .addCase(deleteCartProduct.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+        if (state.isError) {
+          toast.error("Something Went Wrong");
+        }
+      })
+      .addCase(updateCartProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateCartProduct.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.updatedCartProduct = action.payload;
+        if (state.isSuccess) {
+          toast.success("Product update From Cart SuccessFully!");
+        }
+      })
+      .addCase(updateCartProduct.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
