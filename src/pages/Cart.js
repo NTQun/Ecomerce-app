@@ -18,7 +18,6 @@ const Cart = () => {
   const userCartState = useSelector((state) => state.auth.cartProducts);
   const [ProductUpdateDetail, setProductUpdateDetail] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
-
   useEffect(() => {
     dispatch(getUserCart());
   }, []);
@@ -33,9 +32,17 @@ const Cart = () => {
       );
       setTimeout(() => {
         dispatch(getUserCart());
-      }, 200);
+      }, 500);
     }
   }, [ProductUpdateDetail]);
+
+  useEffect(() => {
+    let sum = 0;
+    for (let i = 0; i < userCartState.length; i++) {
+      sum = sum + Number(userCartState[i].quantity) * userCartState[i].price;
+    }
+    setTotalAmount(sum);
+  }, [userCartState]);
 
   const deleteACartProduct = (id) => {
     dispatch(deleteCartProduct(id));
@@ -132,13 +139,15 @@ const Cart = () => {
               <Link to="/product" className="button">
                 Continue To Shopping
               </Link>
-              <div className="d-flex flex-column align-items-center">
-                <h4>SubTotal: $ 1000</h4>
-                <p>Taxes and shipping calculated at checkout</p>
-                <Link to="/checkout" className="button ">
-                  Checkout
-                </Link>
-              </div>
+              {(totalAmount !== null || totalAmount !== 0) && (
+                <div className="d-flex flex-column align-items-center">
+                  <h4>SubTotal: ${totalAmount} </h4>
+                  <p>Taxes and shipping calculated at checkout</p>
+                  <Link to="/checkout" className="button ">
+                    Checkout
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
