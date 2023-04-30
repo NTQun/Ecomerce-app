@@ -16,7 +16,7 @@ const Header = () => {
 
   useEffect(() => {
     let sum = 0;
-    for (let index = 0; index < cartState.length; index++) {
+    for (let index = 0; index < cartState?.length; index++) {
       sum =
         sum +
         Number(cartState[index].quantity) * Number(cartState[index].price);
@@ -110,7 +110,7 @@ const Header = () => {
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">
-                        {cartState.length ? cartState.length : 0}
+                        {cartState?.length ? cartState?.length : 0}
                       </span>
                       <p className="mb-0">$ {total ? total : 0}</p>
                     </div>
