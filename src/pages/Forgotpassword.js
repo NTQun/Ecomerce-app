@@ -25,7 +25,7 @@ const Forgotpassword = () => {
                     <button className="button border-0" type="submit">
                       Submit
                     </button>
-                    <Link to="/login"> Cancel ?</Link>
+                    <Link to="/login"> Cancel?</Link>
                   </div>
                 </div>
               </form>

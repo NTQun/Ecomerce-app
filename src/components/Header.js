@@ -5,7 +5,6 @@ import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
-// import menu from "../images/menu.svg";
 import logo from "../images/logo.webp";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -172,6 +171,7 @@ const Header = () => {
                   <NavLink to="/product">Our Store</NavLink>
                   <NavLink to="/blogs">Blogs</NavLink>
                   <NavLink to="/contact">Contact</NavLink>
+                  <NavLink to="/my-orders">My Orders</NavLink>
                 </div>
               </div>
             </div>
