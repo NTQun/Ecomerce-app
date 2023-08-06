@@ -74,7 +74,8 @@ const Header = () => {
                 <div>
                   <Link
                     to="/compare-product"
-                    className="d-flex align-items-center gap-10 text-white">
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src={compare} alt="compare" />
                     <p className="mb-0">
                       Compare <br />
@@ -85,7 +86,8 @@ const Header = () => {
                 <div>
                   <Link
                     className="d-flex align-items-center gap-10 text-white"
-                    to="/wishlist">
+                    to="/wishlist"
+                  >
                     <img src={wishlist} alt="wishlist" />
                     <p className="mb-0">
                       Favorite <br />
@@ -95,8 +97,9 @@ const Header = () => {
                 </div>
                 <div>
                   <Link
-                    to={authState?.user === null ? "/login" : ""}
-                    className="d-flex align-items-center gap-10 text-white">
+                    to={authState.user === null ? "/login" : "/my-profile"}
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src={user} alt="user" />
                     {authState?.user === null ? (
                       <p className="mb-0">
@@ -113,7 +116,8 @@ const Header = () => {
                 <div>
                   <Link
                     to="/cart"
-                    className="d-flex align-items-center gap-10 text-white">
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
                       <span className="badge bg-white text-dark">
@@ -140,13 +144,15 @@ const Header = () => {
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                  >
                     <img src="/images/menu.svg" alt="" />
                     <span className="me-5 d-inline-block">Shop Categories</span>
                   </button>
                   <ul
                     className="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton1">
+                    aria-labelledby="dropdownMenuButton1"
+                  >
                     <li>
                       <Link className="dropdown-item text-white" to="">
                         Action
