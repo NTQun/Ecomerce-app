@@ -35,11 +35,12 @@ const Profile = () => {
     onSubmit: (values) => {
       dispatch(updateProfile(values));
       setEdit(true);
-      // if(authState.isSuccess){
-      //     navigate('/')
-      // }
     },
   });
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
   return (
     <>
       <BreadCrumb title="My Profile" />
@@ -135,6 +136,14 @@ const Profile = () => {
                 </button>
               )}
             </form>
+          </div>
+          <div>
+            <button
+              className="d-flex align-items-center gap-10 text-white bg-dark"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </Container>
