@@ -1,10 +1,29 @@
 import React from "react";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { forgotPasswordToken } from "../features/user/userSlice";
+
+const emailSchema = yup.object({
+  email: yup.string().email("Email Should be valid").required("Email required"),
+});
 const Forgotpassword = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: emailSchema,
+    onSubmit: (values) => {
+      dispatch(forgotPasswordToken(values));
+    },
+  });
   return (
     <>
       <Meta title={"Forgot Password"} />
@@ -17,15 +36,29 @@ const Forgotpassword = () => {
               <p className="text-center mt-2 mb-3">
                 We will send you an email to reset your password
               </p>
-              <form action="" className="d-flex flex-column gap-30">
-                <CustomInput type="email" name="email" placeholder="Email" />
+              <form
+                action=""
+                onSubmit={formik.handleSubmit}
+                className="d-flex flex-column gap-15"
+              >
+                <CustomInput
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  onChange={formik.handleChange("email")}
+                  onBlur={formik.handleBlur("email")}
+                  value={formik.values.email}
+                />
+                <div className="error text-center">
+                  {formik.touched.email && formik.errors.email}
+                </div>
 
                 <div>
-                  <div className=" mt-3 d-flex justify-content-center flex-column align-items-center gap-15">
+                  <div className="mt-3 d-flex justify-content-center flex-column gap-15  align-items-center">
                     <button className="button border-0" type="submit">
                       Submit
                     </button>
-                    <Link to="/login"> Cancel?</Link>
+                    <Link to="/login">Cancel</Link>
                   </div>
                 </div>
               </form>
