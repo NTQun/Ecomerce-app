@@ -29,7 +29,9 @@ const Login = () => {
     validationSchema: logInSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      navigate("/");
+      if (authState.isSuccess) {
+        navigate("/");
+      } else navigate("/login");
     },
   });
   return (
@@ -44,7 +46,8 @@ const Login = () => {
               <form
                 action=""
                 onSubmit={formik.handleSubmit}
-                className="d-flex flex-column gap-15">
+                className="d-flex flex-column gap-15"
+              >
                 <CustomInput
                   type="email"
                   name="email"

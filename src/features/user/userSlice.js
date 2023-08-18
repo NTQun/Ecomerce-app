@@ -190,7 +190,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
         if (state.isError === true) {
-          toast.info(action.error);
+          toast.error("Login Fail");
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
@@ -7,12 +7,19 @@ import user from "../images/user.svg";
 import cart from "../images/cart.svg";
 import logo from "../images/logo.webp";
 import { useDispatch, useSelector } from "react-redux";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import { getAProduct } from "../features/product/productSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const [total, setTotal] = useState(null);
   const authState = useSelector((state) => state?.auth);
+  const productState = useSelector((state) => state?.product?.product);
+  const [paginate, setPaginate] = useState(true);
+  const [productOpt, setProductOpt] = useState([]);
 
   useEffect(() => {
     let sum = 0;
@@ -23,6 +30,15 @@ const Header = () => {
       setTotal(sum);
     }
   }, [cartState]);
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productState?.length; index++) {
+      const element = productState[index];
+      data.push({ id: index, prod: element?._id, name: element?.title });
+    }
+    setProductOpt(data);
+  }, [productState]);
 
   return (
     <>
@@ -57,12 +73,18 @@ const Header = () => {
             </div>
             <div className="col-4">
               <div className="input-group ">
-                <input
-                  type="text"
-                  className="form-control py-0"
-                  placeholder="Search Product Here...."
-                  aria-label="Search Product Here...."
-                  aria-describedby="basic-addon2"
+                <Typeahead
+                  id="pagination-example"
+                  onPaginate={() => console.log("Results paginated")}
+                  onChange={(selected) => {
+                    navigate(`/product/${selected[0]?.prod}`);
+                    dispatch(getAProduct(selected[0]?.prod));
+                  }}
+                  options={productOpt}
+                  paginate={paginate}
+                  labelKey={"name"}
+                  minLength={2}
+                  placeholder="Search for Products here..."
                 />
                 <span className="input-group-text p-2" id="basic-addon2">
                   <BsSearch className="fs-6" />

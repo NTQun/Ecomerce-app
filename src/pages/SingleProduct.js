@@ -11,7 +11,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/product/productSlice";
+import {
+  getAProduct,
+  getAllProducts,
+  addRating,
+} from "../features/product/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 const SingleProduct = () => {
@@ -23,10 +27,13 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.singleProduct);
+  const productsState = useSelector((state) => state?.product?.product);
   useEffect(() => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart());
+    getAllProducts();
   }, []);
+
   useEffect(() => {
     if (cartState) {
       for (let index = 0; index < cartState?.length; index++) {
@@ -55,6 +62,7 @@ const SingleProduct = () => {
   };
 
   const getProductId = location.pathname.split("/")[2];
+
   const props = {
     width: 594,
     height: 600,
@@ -63,7 +71,9 @@ const SingleProduct = () => {
       ? productState?.images[0].url
       : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
+
   const [orderedProduct] = useState(true);
+
   const copyToClipboard = (text) => {
     console.log("text", text);
     var textField = document.createElement("textarea");
@@ -73,11 +83,46 @@ const SingleProduct = () => {
     document.execCommand("copy");
     textField.remove();
   };
+
   const closeModal = () => {};
+
+  const [popularProduct, setPopularProduct] = useState([]);
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productsState?.length; index++) {
+      const element = productsState[index];
+      if (element.tags === "popular") {
+        data.push(element);
+      }
+      setPopularProduct(data);
+    }
+  }, [productState]);
+
+  const [star, setStar] = useState(null);
+  const [comment, setComment] = useState(null);
+  const addRatingToProduct = () => {
+    if (star === null) {
+      toast.error("Please add star rating");
+      return false;
+    } else if (comment === null) {
+      toast.error("Please write review about the product");
+      return false;
+    } else {
+      dispatch(
+        addRating({ star: star, comment: comment, prodId: getProductId })
+      );
+      setTimeout(() => {
+        dispatch(getAProduct(getProductId));
+      }, 100);
+    }
+    return false;
+  };
+  const totalRating = Number(productState?.totalrating);
   return (
     <>
       <Meta title={"Product Name"} />
-      <BreadCrumb title="Product Name" />
+      <BreadCrumb title={productState?.title} />
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -109,13 +154,19 @@ const SingleProduct = () => {
                 <p className="price">$ {productState?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   <ReactStars
-                    count={5}
-                    size={24}
-                    value={Number(productState?.totalrating)}
                     edit={false}
+                    count={5}
+                    value={productState?.totalrating}
+                    size={24}
+                    isHalf={true}
+                    emptyIcon={<i className="far fa-star"></i>}
+                    halfIcon={<i className="fa fa-star-half-alt"></i>}
+                    fullIcon={<i className="fa fa-star"></i>}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">( 2 Reviews )</p>
+                  <p className="mb-0 t-review">
+                    ({productState?.ratings.length} )
+                  </p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
@@ -199,7 +250,8 @@ const SingleProduct = () => {
                       type="button"
                       onClick={() => {
                         alreadyAdded ? navigate("/cart") : uploadCart();
-                      }}>
+                      }}
+                    >
                       {alreadyAdded ? "Go to Cart" : "Add to Cart"}
                     </button>
                     {/* <button className="button signup">Buy It Now</button> */}
@@ -231,7 +283,8 @@ const SingleProduct = () => {
                     href="javascript:void(0);"
                     onClick={() => {
                       copyToClipboard(window.location.href);
-                    }}>
+                    }}
+                  >
                     Copy Product Link
                   </a>
                 </div>
@@ -248,7 +301,8 @@ const SingleProduct = () => {
               className="bg-white p-3"
               dangerouslySetInnerHTML={{
                 __html: productState?.description,
-              }}></div>
+              }}
+            ></div>
           </div>
         </div>
       </Container>
@@ -264,18 +318,21 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={0}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 2 Reviews</p>
+                    <p className="mb-0">
+                      Based on {productState?.ratings.length} Reviews
+                    </p>
                   </div>
                 </div>
                 {orderedProduct && (
                   <div>
                     <a
                       className="text-dark text-decoration-underline"
-                      href="#/">
+                      href="#/"
+                    >
                       Write a Review
                     </a>
                   </div>
@@ -283,49 +340,63 @@ const SingleProduct = () => {
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
-                <form action="" className="d-flex flex-column gap-15">
-                  <div>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={true}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <div>
-                    <textarea
-                      name=""
-                      id=""
-                      className="w-100 form-control"
-                      cols="30"
-                      rows="4"
-                      placeholder="Comments"></textarea>
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit Review</button>
-                  </div>
-                </form>
-              </div>
-              <div className="reviews mt-4">
-                <div className="review">
-                  <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">Quan</h6>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <p className="mt-3">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Consectetur fugit ut excepturi quos. Id reprehenderit
-                    voluptatem placeat consequatur suscipit ex. Accusamus dolore
-                    quisquam deserunt voluptate, sit magni perspiciatis quas
-                    iste?
-                  </p>
+
+                <div>
+                  <ReactStars
+                    count={5}
+                    size={24}
+                    value={4}
+                    edit={true}
+                    activeColor="#ffd700"
+                    onChange={(e) => {
+                      setStar(e);
+                    }}
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name=""
+                    id=""
+                    className="w-100 form-control"
+                    cols="30"
+                    rows="4"
+                    placeholder="Comments"
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <button
+                    onClick={addRatingToProduct}
+                    className="button border-0"
+                  >
+                    Submit Review
+                  </button>
+                </div>
+                <div className="reviews mt-4">
+                  {productState &&
+                    productState?.ratings?.map((item, index) => {
+                      return (
+                        <div key={index} className="review ">
+                          <div className="d-flex gap-10 align-items-center">
+                            <h6 className="mb-0">{item?.title}</h6>
+                            <ReactStars
+                              edit={false}
+                              count={5}
+                              value={item?.star}
+                              size={24}
+                              isHalf={true}
+                              emptyIcon={<i className="far fa-star"></i>}
+                              halfIcon={<i className="fa fa-star-half-alt"></i>}
+                              fullIcon={<i className="fa fa-star"></i>}
+                              activeColor="#ffd700"
+                            />
+                          </div>
+                          <p className="mt-3">{item?.comment}</p>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -339,7 +410,7 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard data={popularProduct} />
         </div>
       </Container>
 
@@ -350,7 +421,8 @@ const SingleProduct = () => {
         data-bs-keyboard="false"
         tabindex="-1"
         aria-labelledby="staticBackdropLabel"
-        aria-hidden="true">
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-dialog-centered ">
           <div className="modal-content">
             <div className="modal-header py-0 border-0">
@@ -358,7 +430,8 @@ const SingleProduct = () => {
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"></button>
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body py-0">
               <div className="d-flex align-items-center">
@@ -387,7 +460,8 @@ const SingleProduct = () => {
                 to="/product"
                 onClick={() => {
                   closeModal();
-                }}>
+                }}
+              >
                 Continue To Shopping
               </Link>
             </div>

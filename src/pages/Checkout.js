@@ -168,7 +168,8 @@ const Checkout = () => {
               <h3 className="website-name">Digitic</h3>
               <nav
                 style={{ "--bs-breadcrumb-divider": ">" }}
-                aria-label="breadcrumb">
+                aria-label="breadcrumb"
+              >
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
                     <Link className="text-dark total-price" to="/cart">
@@ -178,7 +179,8 @@ const Checkout = () => {
                   &nbsp; /&nbsp;
                   <li
                     className="breadcrumb-ite total-price active"
-                    aria-current="page">
+                    aria-current="page"
+                  >
                     Information
                   </li>
                   &nbsp; /
@@ -188,7 +190,8 @@ const Checkout = () => {
                   &nbsp; /
                   <li
                     className="breadcrumb-item total-price active"
-                    aria-current="page">
+                    aria-current="page"
+                  >
                     Payment
                   </li>
                 </ol>
@@ -201,7 +204,8 @@ const Checkout = () => {
               <form
                 onSubmit={formik.handleSubmit}
                 action=""
-                className="d-flex gap-15 flex-wrap justify-content-between">
+                className="d-flex gap-15 flex-wrap justify-content-between"
+              >
                 <div className="w-100">
                   <select
                     name="country"
@@ -209,7 +213,8 @@ const Checkout = () => {
                     onChange={formik.handleChange("country")}
                     onBlur={formik.handleBlur("country")}
                     values={formik.values.country}
-                    id="">
+                    id=""
+                  >
                     <option value="select" selected>
                       Selected Contry
                     </option>
@@ -296,7 +301,8 @@ const Checkout = () => {
                     onBlur={formik.handleBlur("state")}
                     values={formik.values.state}
                     className="form-control form-select"
-                    id="">
+                    id=""
+                  >
                     <option value="" selected disabled>
                       Select State
                     </option>
@@ -326,7 +332,8 @@ const Checkout = () => {
                     <button
                       className="button"
                       type="submit"
-                      onClick={checkOuteHandler}>
+                      onClick={checkOuteHandler}
+                    >
                       Place Order
                     </button>
                   </div>
@@ -341,12 +348,14 @@ const Checkout = () => {
                   return (
                     <div
                       key={index}
-                      className="d-flex gap-10 mb-2 align-align-items-center">
+                      className="d-flex gap-10 mb-2 align-align-items-center"
+                    >
                       <div className="w-75 d-flex gap-10">
                         <div className="w-25 position-relative">
                           <span
                             style={{ top: "-10px", right: "2px" }}
-                            className="badge bg-secondary text-white rounded-circle p-2 position-absolute">
+                            className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
+                          >
                             {item?.quantity}
                           </span>
                           <img
