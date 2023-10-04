@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
@@ -19,7 +19,6 @@ const signUpSchema = yup.object({
   mobile: yup.string().required("Mobile No is Required"),
   password: yup.string().required("Password is Required"),
 });
-
 const Signup = () => {
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -35,7 +34,13 @@ const Signup = () => {
       dispatch(registerUser(values));
     },
   });
-
+  const navigate = useNavigate();
+  const authState = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (authState.created !== null && authState.isError === false) {
+      navigate("/login");
+    }
+  }, [authState]);
   return (
     <>
       <Meta title={"Sign Up"} />
@@ -48,7 +53,8 @@ const Signup = () => {
               <form
                 action=""
                 onSubmit={formik.handleSubmit}
-                className="d-flex flex-column gap-15">
+                className="d-flex flex-column gap-15"
+              >
                 <CustomInput
                   type="text"
                   name="firstname"

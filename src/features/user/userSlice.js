@@ -156,7 +156,7 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.creatUser = action.payload;
+        state.createdUser = action.payload;
         state.message = "success";
         if (state.isSuccess === true) {
           toast.info("User Created Successfully");
@@ -168,7 +168,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
         if (state.isError === true) {
-          toast.info(action.error);
+          toast.info(action.payload.response.data.message);
         }
       })
       .addCase(loginUser.pending, (state) => {
@@ -190,7 +190,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
         if (state.isError === true) {
-          toast.error("Login Fail");
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {
@@ -330,9 +330,19 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.updatedUser = action.payload;
-        if (state.isSuccess) {
-          toast.success("Profile Updated Successfully!");
-        }
+        let currentUserData = localStorage.getItem("customer");
+        let newUserData = {
+          _id: currentUserData?._id,
+          token: currentUserData?.token,
+          firstname: action?.payload?.firstname,
+          lastname: action?.payload?.lastname,
+          email: action?.payload?.email,
+          mobile: action?.payload?.mobile,
+        };
+        localStorage.setItem("customer", JSON.stringify(newUserData));
+        state.user = newUserData;
+
+        toast.success("Profile Updated Successfully!");
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;

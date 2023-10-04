@@ -19,21 +19,34 @@ const profileSchema = yup.object({
 });
 
 const Profile = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+    ? JSON.parse(localStorage.getItem("customer"))
+    : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
+
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.auth.user);
   const [edit, setEdit] = useState(true);
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      firstname: userState?.firstname ? userState?.firstname : "",
-      lastname: userState?.lastname ? userState?.lastname : "",
-      mobile: userState?.mobile ? userState?.mobile : "",
-      email: userState?.email ? userState?.email : "",
+      firstname: userState?.firstname,
+      lastname: userState?.lastname,
+      mobile: userState?.mobile,
+      email: userState?.email,
     },
     validationSchema: profileSchema,
 
     onSubmit: (values) => {
-      dispatch(updateProfile(values));
+      dispatch(updateProfile({ data: values, config2: config2 }));
       setEdit(true);
     },
   });
@@ -44,19 +57,18 @@ const Profile = () => {
   return (
     <>
       <BreadCrumb title="My Profile" />
-      <Container class1="cart-wrapper home-wrapper-2 py-5">
+      <Container class1="cart-wrapper home-wrapper-2 py-5 px-5">
         <div className="row">
           <div className="col-12">
             <div className="div d-flex justify-content-between align-items-center">
               <h3 className="my-3">Update Profile</h3>
               <FiEdit className="fs-3" onClick={() => setEdit(false)} />
             </div>
-            <img src="" alt="" srcset="" />
           </div>
           <div className="col-12">
             <form onSubmit={formik.handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="example1" class="form-label">
+                <label htmlFor="example1" className="form-label">
                   First Name
                 </label>
                 <input
@@ -74,7 +86,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="example1" class="form-label">
+                <label htmlFor="example1" className="form-label">
                   Last Name
                 </label>
                 <input
@@ -92,7 +104,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" class="form-label">
+                <label htmlFor="exampleInputEmail1" className="form-label">
                   Email Address
                 </label>
                 <input
@@ -112,7 +124,7 @@ const Profile = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="exampleInputEmail2" class="form-label">
+                <label htmlFor="exampleInputEmail2" className="form-label">
                   Mobile Number
                 </label>
                 <input
@@ -137,10 +149,11 @@ const Profile = () => {
               )}
             </form>
           </div>
-          <div>
+          <div className="d-flex align-items-end ">
             <button
-              className="d-flex align-items-center gap-10 text-white bg-dark"
+              className="align-items-end gap-10 text-white bg-dark"
               onClick={handleLogout}
+              style={{ right: "10px" }}
             >
               Logout
             </button>

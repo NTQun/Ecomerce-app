@@ -70,7 +70,11 @@ const getUserOrders = async () => {
 };
 
 const updateUser = async (data) => {
-  const response = await axios.put(`${base_url}user/edit-user`, data, config);
+  const response = await axios.put(
+    `${base_url}user/edit-user`,
+    data.data,
+    data.config2
+  );
   if (response.data) {
     return response.data;
   }
