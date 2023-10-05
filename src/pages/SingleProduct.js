@@ -29,8 +29,22 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state?.product?.singleProduct);
   const productsState = useSelector((state) => state?.product?.product);
   useEffect(() => {
+    const getTokenFromLocalStorage = localStorage.getItem("customer")
+      ? JSON.parse(localStorage.getItem("customer"))
+      : null;
+
+    const config2 = {
+      headers: {
+        Authorization: `Bearer ${
+          getTokenFromLocalStorage !== null
+            ? getTokenFromLocalStorage.token
+            : ""
+        }`,
+        Accept: "application/json",
+      },
+    };
     dispatch(getAProduct(getProductId));
-    dispatch(getUserCart());
+    dispatch(getUserCart(config2));
     getAllProducts();
   }, []);
 
@@ -57,7 +71,9 @@ const SingleProduct = () => {
           price: productState?.price,
         })
       );
-      navigate("/cart");
+      setTimeout(() => {
+        navigate("/cart");
+      }, 300);
     }
   };
 

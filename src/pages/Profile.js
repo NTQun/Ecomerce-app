@@ -50,10 +50,7 @@ const Profile = () => {
       setEdit(true);
     },
   });
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
+
   return (
     <>
       <BreadCrumb title="My Profile" />
@@ -148,15 +145,6 @@ const Profile = () => {
                 </button>
               )}
             </form>
-          </div>
-          <div className="d-flex align-items-end ">
-            <button
-              className="align-items-end gap-10 text-white bg-dark"
-              onClick={handleLogout}
-              style={{ right: "10px" }}
-            >
-              Logout
-            </button>
           </div>
         </div>
       </Container>

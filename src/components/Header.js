@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { getAProduct } from "../features/product/productSlice";
+import { getUserCart } from "../features/user/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,26 @@ const Header = () => {
   const productState = useSelector((state) => state?.product?.product);
   const [paginate, setPaginate] = useState(true);
   const [productOpt, setProductOpt] = useState([]);
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
 
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+    ? JSON.parse(localStorage.getItem("customer"))
+    : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
+  useEffect(() => {
+    dispatch(getUserCart(config2));
+  }, []);
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
@@ -93,18 +113,7 @@ const Header = () => {
             </div>
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
-                <div>
-                  <Link
-                    to="/compare-product"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={compare} alt="compare" />
-                    <p className="mb-0">
-                      Compare <br />
-                      Products
-                    </p>
-                  </Link>
-                </div>
+                <div></div>
                 <div>
                   <Link
                     className="d-flex align-items-center gap-10 text-white"
@@ -201,6 +210,17 @@ const Header = () => {
                   <NavLink to="/blogs">Blogs</NavLink>
                   <NavLink to="/contact">Contact</NavLink>
                   <NavLink to="/my-orders">My Orders</NavLink>
+                  {authState.user && (
+                    <div className="d-flex align-items-end ">
+                      <button
+                        className="border border-0 bg-transparent text-white text-uppercase"
+                        onClick={handleLogout}
+                        style={{ right: "10px" }}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

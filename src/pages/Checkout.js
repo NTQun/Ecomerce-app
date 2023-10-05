@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,12 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { base_url, config } from "../utils/axiosConfig";
-import { createAnOrder } from "../features/user/userSlice";
+import {
+  createAnOrder,
+  deleteUserCart,
+  getUserCart,
+  resetState,
+} from "../features/user/userSlice";
 const shippingSchema = yup.object({
   firstName: yup.string().required("First Name is Required"),
   lastName: yup.string().required("Last Name is Required"),
@@ -21,7 +26,8 @@ const shippingSchema = yup.object({
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const authState = useSelector((state) => state?.auth?.user);
+  const navigate = useNavigate();
+  const authState = useSelector((state) => state?.auth);
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingIndfo, setShippingInfo] = useState(null);
@@ -31,6 +37,18 @@ const Checkout = () => {
   });
   const [cartProductState, setCartProductState] = useState([]);
 
+  const getTokenFromLocalStorage = localStorage.getItem("customer")
+    ? JSON.parse(localStorage.getItem("customer"))
+    : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${
+        getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+      }`,
+      Accept: "application/json",
+    },
+  };
   useEffect(() => {
     let sum = 0;
     for (let i = 0; i < cartState?.length; i++) {
@@ -39,6 +57,17 @@ const Checkout = () => {
     setTotalAmount(sum);
   }, [cartState]);
 
+  useEffect(() => {
+    if (
+      authState.orderedProduct !== null &&
+      authState?.orderedProduct?.success == true
+    ) {
+      navigate("/my-orders");
+    }
+  }, [authState]);
+  useEffect(() => {
+    dispatch(getUserCart(config2));
+  }, []);
   // console.log(paymentInfo, shippingIndfo);
   const formik = useFormik({
     initialValues: {
@@ -54,6 +83,7 @@ const Checkout = () => {
     validationSchema: shippingSchema,
     onSubmit: (values) => {
       setShippingInfo(values);
+      localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
         checkOuteHandler();
       }, 500);
@@ -128,8 +158,8 @@ const Checkout = () => {
         );
 
         setPaymentInfo({
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
+          razorpayPaymentId: result.razorpay_payment_id,
+          razorpayOrderId: result.razorpay_order_id,
         });
 
         dispatch(
@@ -137,10 +167,13 @@ const Checkout = () => {
             totalPrice: totalAmount,
             totalPriceAfterDiscount: totalAmount,
             orderItems: cartProductState,
-            paymentInfo,
-            shippingIndfo,
+            paymentInfo: result.data,
+            shippingIndfo: JSON.parse(localStorage.getItem("address")),
           })
         );
+        localStorage.removeItem("address");
+        dispatch(deleteUserCart());
+        dispatch(resetState());
       },
       prefill: {
         name: "Trung Quan",

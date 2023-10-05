@@ -26,16 +26,16 @@ const addToCart = async (cartData) => {
     return response.data;
   }
 };
-const getCart = async () => {
-  const response = await axios.get(`${base_url}user/cart`, config);
+const getCart = async (data) => {
+  const response = await axios.get(`${base_url}user/cart`, data);
   if (response.data) {
     return response.data;
   }
 };
-const removeProductFromCart = async (cartItemId) => {
+const removeProductFromCart = async (data) => {
   const response = await axios.delete(
-    `${base_url}user/delete-product-cart/${cartItemId}`,
-    config
+    `${base_url}user/delete-product-cart/${data.id}`,
+    data.config2
   );
   if (response.data) {
     return response.data;
@@ -80,22 +80,29 @@ const updateUser = async (data) => {
   }
 };
 const forgotPassToken = async (data) => {
-  const responce = await axios.post(
+  const response = await axios.post(
     `${base_url}user/forgot-password-token`,
     data
   );
-  if (responce.data) {
-    return responce.data;
+  if (response.data) {
+    return response.data;
   }
 };
 
 const resetPass = async (data) => {
-  const responce = await axios.put(
+  const response = await axios.put(
     `${base_url}user/reset-password/${data.token}`,
     { password: data?.password }
   );
-  if (responce.data) {
-    return responce.data;
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const emptyCart = async () => {
+  const response = await axios.delete(`${base_url}user/empty/`, config);
+  if (response.data) {
+    return response.data;
   }
 };
 
@@ -112,4 +119,5 @@ export const authService = {
   updateUser,
   forgotPassToken,
   resetPass,
+  emptyCart,
 };
