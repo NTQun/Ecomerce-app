@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { base_url, config } from "../utils/axiosConfig";
 import {
+  applyCoupon,
   createAnOrder,
   deleteUserCart,
   getUserCart,
@@ -31,10 +32,12 @@ const Checkout = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingIndfo, setShippingInfo] = useState(null);
+  const [coupon, setCoupon] = useState("");
   const [paymentInfo, setPaymentInfo] = useState({
     razorpayPaymentId: "",
     razorpayOrderId: "",
   });
+
   const [cartProductState, setCartProductState] = useState([]);
 
   const getTokenFromLocalStorage = localStorage.getItem("customer")
@@ -92,7 +95,7 @@ const Checkout = () => {
 
   useEffect(() => {
     let items = [];
-    for (let index = 0; index < cartState.length; index++) {
+    for (let index = 0; index < cartState?.length; index++) {
       items.push({
         product: cartState[index].productId._id,
         quantity: cartState[index].quantity,
@@ -198,7 +201,7 @@ const Checkout = () => {
         <div className="row">
           <div className="col-7">
             <div className="checkout-left-data">
-              <h3 className="website-name">Digitic</h3>
+              <h3 className="website-name">Shop Tech</h3>
               <nav
                 style={{ "--bs-breadcrumb-divider": ">" }}
                 aria-label="breadcrumb"
@@ -337,9 +340,14 @@ const Checkout = () => {
                     id=""
                   >
                     <option value="" selected disabled>
-                      Select State
+                      Chọn Tỉnh Thành Phố
                     </option>
-                    <option value="haryana">Haryana</option>
+                    <option value="HCM">HCM</option>
+                    <option value="Cần Thơ">Cần Thơ</option>
+                    <option value="Sóc Trăng">Sóc Trăng</option>
+                    <option value="Hậu Giang">Hậu Giang</option>
+                    <option value="Vĩnh Long">Vĩnh Long</option>
+                    <option value="Trà Vinh">Trà Vinh</option>
                   </select>
                 </div>
                 <div className="flex-grow-1">
@@ -423,6 +431,7 @@ const Checkout = () => {
                 <p className="mb-0 total-price">$ 3</p>
               </div>
             </div>
+
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">

@@ -19,7 +19,9 @@ const BlogCard = (props) => {
           className="desc"
           dangerouslySetInnerHTML={{
             __html: description?.substr(0, 70) + "...",
-          }}></p>
+          }}
+        ></p>
+
         <Link className="button " to={"/blogs/" + id}>
           Read more
         </Link>

@@ -7,6 +7,7 @@ import { HiOutlineArrowLeft } from "react-icons/hi";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getABlog } from "../features/blog/blogSlice";
+import { GrLike, GrDislike } from "react-icons/gr";
 
 const SingleBlog = () => {
   const blogState = useSelector((state) => state?.blog?.singleBlog);
@@ -43,7 +44,16 @@ const SingleBlog = () => {
                 <p
                   dangerouslySetInnerHTML={{
                     __html: blogState?.description,
-                  }}></p>
+                  }}
+                ></p>
+                <div>
+                  <button to="" className="px-3 mx-3">
+                    <GrLike />
+                  </button>
+                  <button to="" className="px-3">
+                    <GrDislike />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

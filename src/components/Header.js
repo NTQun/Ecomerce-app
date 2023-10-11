@@ -11,7 +11,6 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import { getAProduct } from "../features/product/productSlice";
 import { getUserCart } from "../features/user/userSlice";
-
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,11 +20,16 @@ const Header = () => {
   const productState = useSelector((state) => state?.product?.product);
   const [paginate, setPaginate] = useState(true);
   const [productOpt, setProductOpt] = useState([]);
+  const categoryState = [];
+  for (let index = 0; index < productState.length; index++) {
+    categoryState.push(productState[index].category);
+  }
+  const categoryList = new Set(categoryState);
+  const list = [...categoryList];
   const handleLogout = () => {
     localStorage.clear();
     window.location.reload();
   };
-
   const getTokenFromLocalStorage = localStorage.getItem("customer")
     ? JSON.parse(localStorage.getItem("customer"))
     : null;
@@ -84,10 +88,10 @@ const Header = () => {
       <header className="header-upper py-2">
         <div className="container-xx">
           <div className="row align-items-center set-padding">
-            <div className="col-2 ">
+            <div className="col-2  mt-2">
               <p className="text-white">
                 <Link to="/">
-                  <img src={logo} alt="logo" />
+                  <h1 style={{ color: "yellow" }}>Shop TECH</h1>
                 </Link>
               </p>
             </div>
@@ -185,21 +189,19 @@ const Header = () => {
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton1"
                   >
-                    <li>
-                      <Link className="dropdown-item text-white" to="">
-                        Action
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item text-white" to="">
-                        Another action
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item text-white" to="">
-                        Something else here
-                      </Link>
-                    </li>
+                    {list &&
+                      list.map((item, index) => {
+                        return (
+                          <li key={index}>
+                            <Link
+                              className="dropdown-item text-white"
+                              to={`/product/category/${item}`}
+                            >
+                              {item}
+                            </Link>
+                          </li>
+                        );
+                      })}
                   </ul>
                 </div>
               </div>

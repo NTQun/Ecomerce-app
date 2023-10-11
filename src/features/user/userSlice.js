@@ -424,6 +424,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
+
       .addCase(resetState, () => initialState);
   },
 });

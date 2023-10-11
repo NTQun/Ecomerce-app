@@ -2,22 +2,34 @@ import React, { useEffect, useState } from "react";
 import Meta from "../components/Meta";
 import BreadCrumb from "../components/BreadCrumb";
 import ProductCard from "../components/ProductCard";
-import ReactStars from "react-rating-stars-component";
-import Color from "../components/Color";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/product/productSlice";
 import { BiReset } from "react-icons/bi";
-import { useLocation } from "react-router-dom";
+import gr from "../images/gr.svg";
+import gr2 from "../images/gr2.svg";
+import gr3 from "../images/gr3.svg";
+import gr4 from "../images/gr4.svg";
+import ReactStars from "react-rating-stars-component";
+import { Link, useLocation } from "react-router-dom";
+import prodcompare from "../images/prodcompare.svg";
+import wish from "../images/wish.svg";
+import addcart from "../images/add-cart.svg";
+import view from "../images/view.svg";
+import { addToWishlist } from "../features/product/productSlice";
 
-const OurStore = () => {
+const OurStoreCategory = () => {
   const location = useLocation();
-
   const getCate = location.pathname.split("/")[3];
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+  };
+  const cateName = decodeURIComponent(getCate);
+
   const [grid, setGrid] = useState(4);
   const productState = useSelector((state) => state?.product?.product);
   const [brands, setBrands] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(getCate);
   const [tags, setTags] = useState([]);
 
   // Filter State
@@ -47,11 +59,7 @@ const OurStore = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (getCate) {
-      getAllProducts({ getCate });
-    } else {
-      getProducts();
-    }
+    getProducts();
   }, [sort, tag, brand, category, minPrice, maxPrice]);
 
   const getProducts = () => {
@@ -63,6 +71,7 @@ const OurStore = () => {
         category,
         minPrice,
         maxPrice,
+        getCate,
       })
     );
   };
@@ -96,14 +105,9 @@ const OurStore = () => {
 
             <div className="filter-card mb-3">
               <h3 className="filter-title">Filter By</h3>
-              <h3
-                className="filter-title"
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
+              <Link className="filter-title" to="/product">
                 Reset Filter <BiReset />
-              </h3>
+              </Link>
 
               <div>
                 <h5 className="sub-title">Price</h5>
@@ -193,14 +197,15 @@ const OurStore = () => {
                 </div>
                 <div className="d-flex align-items-center gap-10">
                   <p className="totalproducts mb-0 " style={{ width: "100px" }}>
-                    {productState?.length} Products
+                    21 Products
                   </p>
                   <div className="d-flex gap-10 align-items-center grid">
                     <img
                       onClick={() => {
                         setGrid(3);
                       }}
-                      src="images/gr4.svg"
+                      //   src="images/gr.svg"
+                      src={gr4}
                       className="d-block img-fluid"
                       alt="grid"
                     />
@@ -208,7 +213,8 @@ const OurStore = () => {
                       onClick={() => {
                         setGrid(4);
                       }}
-                      src="images/gr3.svg"
+                      //   src="images/gr3.svg"
+                      src={gr3}
                       className="d-block img-fluid"
                       alt="grid"
                     />
@@ -216,7 +222,8 @@ const OurStore = () => {
                       onClick={() => {
                         setGrid(6);
                       }}
-                      src="images/gr2.svg"
+                      //   src="images/gr2.svg"
+                      src={gr2}
                       className="d-block img-fluid"
                       alt="grid"
                     />
@@ -224,7 +231,7 @@ const OurStore = () => {
                       onClick={() => {
                         setGrid(12);
                       }}
-                      src="images/gr.svg"
+                      src={gr}
                       className="d-block img-fluid"
                       alt="grid"
                     />
@@ -234,11 +241,99 @@ const OurStore = () => {
             </div>
             <div className="products-list pb-4">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard
-                  filter={getCate}
-                  data={productState ? productState : []}
-                  grid={grid}
-                />
+                {
+                  <>
+                    {productState?.map((item, index) => {
+                      if (item.category == cateName) {
+                        return (
+                          <div
+                            key={index}
+                            className={` ${
+                              location.pathname ==
+                              `/product/category/${getCate}`
+                                ? `gr-${grid}`
+                                : "col-3"
+                            } `}
+                          >
+                            <div className="product-card position-relative">
+                              <div className="wishlist-icon position-absolute">
+                                <button
+                                  className="border-0 bg-transparent"
+                                  onClick={(e) => {
+                                    addToWish(item?._id);
+                                  }}
+                                >
+                                  <img src={wish} alt="wishlist" />
+                                </button>
+                              </div>
+                              <div className="product-image">
+                                <img
+                                  src={item?.images[0]?.url}
+                                  className="img-fluid w-100"
+                                  alt="product-image"
+                                />
+                                <img
+                                  src={item?.images[1]?.url}
+                                  className="img-fluid"
+                                  alt="product-image"
+                                />
+                              </div>
+                              <div className="product-details">
+                                <h6 className="brand">{item?.brand}</h6>
+                                <h5 className="product-title">{item.title}</h5>
+                                <ReactStars
+                                  edit={false}
+                                  count={5}
+                                  value={item?.totalrating.toString()}
+                                  size={24}
+                                  isHalf={true}
+                                  emptyIcon={<i className="far fa-star"></i>}
+                                  halfIcon={
+                                    <i className="fa fa-star-half-alt"></i>
+                                  }
+                                  fullIcon={<i className="fa fa-star"></i>}
+                                  activeColor="#ffd700"
+                                />
+                                <p
+                                  className={`description ${
+                                    grid === 12 ? "d-block" : "d-none"
+                                  }`}
+                                  dangerouslySetInnerHTML={{
+                                    __html: item?.description,
+                                  }}
+                                ></p>
+                                <p className="price">$ {item?.price}</p>
+                              </div>
+
+                              <div className="action-bar position-absolute">
+                                <div className="d-flex flex-column ">
+                                  <button className="border-0 bg-transparent">
+                                    <img src={prodcompare} alt="compare" />
+                                  </button>
+                                </div>
+
+                                <div className="d-flex flex-column">
+                                  <Link
+                                    to={`/product/${item._id}`}
+                                    className="border-0 bg-transparent"
+                                  >
+                                    <img src={view} alt="view" />
+                                  </Link>
+                                </div>
+
+                                <div className="d-flex flex-column">
+                                  <button className="border-0 bg-transparent">
+                                    <img src={addcart} alt="addcart" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      }
+                    })}
+                  </>
+                }
               </div>
             </div>
           </div>
@@ -248,4 +343,4 @@ const OurStore = () => {
   );
 };
 
-export default OurStore;
+export default OurStoreCategory;

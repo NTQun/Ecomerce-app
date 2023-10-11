@@ -15,9 +15,13 @@ import {
   getAProduct,
   getAllProducts,
   addRating,
+  getComment,
+  resetState,
 } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
+import { addToWishlist } from "../features/product/productSlice";
+
 const SingleProduct = () => {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -28,6 +32,11 @@ const SingleProduct = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.singleProduct);
   const productsState = useSelector((state) => state?.product?.product);
+  const commentState = useSelector((state) => state?.product?.commentUser);
+
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+  };
   useEffect(() => {
     const getTokenFromLocalStorage = localStorage.getItem("customer")
       ? JSON.parse(localStorage.getItem("customer"))
@@ -46,6 +55,7 @@ const SingleProduct = () => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart(config2));
     getAllProducts();
+    dispatch(getComment(getProductId));
   }, []);
 
   useEffect(() => {
@@ -83,9 +93,7 @@ const SingleProduct = () => {
     width: 594,
     height: 600,
     zoomWidth: 600,
-    img: productState?.images[0].url
-      ? productState?.images[0].url
-      : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
+    img: productState?.images[0].url,
   };
 
   const [orderedProduct] = useState(true);
@@ -128,13 +136,14 @@ const SingleProduct = () => {
       dispatch(
         addRating({ star: star, comment: comment, prodId: getProductId })
       );
+      toast.success("Add Rating Success");
       setTimeout(() => {
         dispatch(getAProduct(getProductId));
-      }, 100);
+        dispatch(resetState());
+      }, 300);
     }
     return false;
   };
-  const totalRating = Number(productState?.totalrating);
   return (
     <>
       <Meta title={"Product Name"} />
@@ -144,7 +153,7 @@ const SingleProduct = () => {
           <div className="col-6">
             <div className="main-product-image">
               <div>
-                <ReactImageZoom {...props} />
+                <img className="big-img" src={props.img} alt="" />
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
@@ -172,7 +181,7 @@ const SingleProduct = () => {
                   <ReactStars
                     edit={false}
                     count={5}
-                    value={productState?.totalrating}
+                    value={parseInt(productState?.totalrating)}
                     size={24}
                     isHalf={true}
                     emptyIcon={<i className="far fa-star"></i>}
@@ -181,7 +190,7 @@ const SingleProduct = () => {
                     activeColor="#ffd700"
                   />
                   <p className="mb-0 t-review">
-                    ({productState?.ratings.length} )
+                    ({productState?.ratings.length} Review)
                   </p>
                 </div>
                 <a className="review-btn" href="#review">
@@ -209,23 +218,7 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Availablity :</h3>
                   <p className="product-data">In Stock</p>
                 </div>
-                {/* <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Size :</h3>
-                  <div className="d-flex flex-wrap gap-15">
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      S
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      M
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XL
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XXL
-                    </span>
-                  </div>
-                </div> */}
+
                 {alreadyAdded === false && (
                   <>
                     <div className="d-flex gap-10 flex-column mt-2 mb-3">
@@ -247,7 +240,7 @@ const SingleProduct = () => {
                           name=""
                           defaultValue={1}
                           min={1}
-                          max={10}
+                          max={productState?.quantity}
                           className="form-control"
                           style={{ width: "70px" }}
                           id=""
@@ -280,8 +273,14 @@ const SingleProduct = () => {
                     </a>
                   </div>
                   <div>
-                    <a href="#/">
-                      <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
+                    <a>
+                      <AiOutlineHeart
+                        className="fs-5 me-2"
+                        onClick={(e) => {
+                          addToWish(productState?.id);
+                        }}
+                      />{" "}
+                      Add to Wishlist
                     </a>
                   </div>
                 </div>
@@ -334,7 +333,7 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={0}
+                      value={Number(productState?.totalrating)}
                       edit={false}
                       activeColor="#ffd700"
                     />
@@ -361,7 +360,7 @@ const SingleProduct = () => {
                   <ReactStars
                     count={5}
                     size={24}
-                    value={4}
+                    value={0}
                     edit={true}
                     activeColor="#ffd700"
                     onChange={(e) => {
@@ -409,7 +408,13 @@ const SingleProduct = () => {
                               activeColor="#ffd700"
                             />
                           </div>
-                          <p className="mt-3">{item?.comment}</p>
+                          <p className="mt-3 text-dark">
+                            <p>
+                              {commentState[index]?.firstname}
+                              {commentState[index]?.lastname}
+                            </p>
+                            {item?.comment}
+                          </p>
                         </div>
                       );
                     })}

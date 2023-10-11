@@ -6,10 +6,10 @@ const getProducts = async (data) => {
     `${base_url}product?${data?.brand ? `brand=${data?.brand}&&` : ""}${
       data?.tag ? `tags=${data?.tag}&&` : ""
     }${data?.category ? `category=${data?.category}&&` : ""}${
-      data?.minPrice ? `price[gte]=${data?.minPrice}&&` : ""
-    }${data?.maxPrice ? `price[lte]=${data?.maxPrice}&&` : ""}${
-      data?.sort ? `sort=${data?.sort}&&` : ""
-    }`
+      data?.getcate ? `category=${data?.getcate}&&` : ""
+    }${data?.minPrice ? `price[gte]=${data?.minPrice}&&` : ""}${
+      data?.maxPrice ? `price[lte]=${data?.maxPrice}&&` : ""
+    }${data?.sort ? `sort=${data?.sort}&&` : ""}`
   );
   if (response.data) {
     return response.data;
@@ -39,10 +39,16 @@ const rateProduct = async (data) => {
     return responce.data;
   }
 };
-
+const getUserComment = async (id) => {
+  const responce = await axios.get(`${base_url}product/comment/${id}`);
+  if (responce.data) {
+    return responce.data;
+  }
+};
 export const productService = {
   getProducts,
   addToWishlist,
   getSingleProduct,
   rateProduct,
+  getUserComment,
 };
