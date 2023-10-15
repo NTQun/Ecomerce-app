@@ -411,13 +411,13 @@ const Home = () => {
               <h3 className="section-heading">Our Popular Products</h3>
             </div>
           </div>
-          <div className="row">
+          <div className="row" style={{ minHeight: "431px" }}>
             {productState &&
               productState?.map((item, index) => {
                 if (item.tags === "popular") {
                   return (
                     <div key={index} className={"col-3"}>
-                      <div className="product-card position-relative">
+                      <div className="product-card position-relative ">
                         <div className="wishlist-icon position-absolute">
                           <button
                             className="border-0 bg-transparent"
@@ -435,11 +435,13 @@ const Home = () => {
                           className="product-image"
                         >
                           <img
+                            style={{ maxHeight: "200px" }}
                             src={item?.images[0]?.url}
                             className="img-fluid w-100"
                             alt="product-image"
                           />
                           <img
+                            style={{ maxHeight: "200px" }}
                             src={item?.images[1]?.url}
                             className="img-fluid"
                             alt="product-image"
@@ -544,7 +546,7 @@ const Home = () => {
               ? blogState?.map((item, index) => {
                   if (index < 3) {
                     return (
-                      <div className="col-3 mb-3" key={index}>
+                      <div className="col-3 mb-3 blog-home" key={index}>
                         <BlogCard
                           id={item?._id}
                           title={item?.title}

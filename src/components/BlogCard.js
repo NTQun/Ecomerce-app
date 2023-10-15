@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const BlogCard = (props) => {
   const { id, title, description, date, image } = props;
   return (
@@ -14,7 +13,9 @@ const BlogCard = (props) => {
       </div>
       <div className="blog-content">
         <p className="date">{date}</p>
-        <h5 className="title"> {title} </h5>
+        <h5 className="title" style={{ overflow: "..." }}>
+          {title}
+        </h5>
         <p
           className="desc"
           dangerouslySetInnerHTML={{

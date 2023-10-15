@@ -42,11 +42,13 @@ const ProductCard = (props) => {
                   src={item?.images[0]?.url}
                   className="img-fluid w-100"
                   alt="product-image"
+                  style={{ maxHeight: "200px" }}
                 />
                 <img
                   src={item?.images[1]?.url}
                   className="img-fluid"
                   alt="product-image"
+                  style={{ maxHeight: "200px" }}
                 />
               </Link>
               <div className="product-details">
@@ -55,7 +57,7 @@ const ProductCard = (props) => {
                 <ReactStars
                   edit={false}
                   count={5}
-                  value={item?.totalrating.toString()}
+                  value={Number(item?.totalrating.toString())}
                   size={24}
                   isHalf={true}
                   emptyIcon={<i className="far fa-star"></i>}
@@ -67,7 +69,9 @@ const ProductCard = (props) => {
                   className={`description ${
                     grid === 12 ? "d-block" : "d-none"
                   }`}
-                  dangerouslySetInnerHTML={{ __html: item?.description }}
+                  dangerouslySetInnerHTML={{
+                    __html: item?.description?.substr(0, 70) + "...",
+                  }}
                 ></p>
                 <p className="price">$ {item?.price}</p>
               </div>

@@ -26,7 +26,20 @@ const SingleBlog = () => {
       <BreadCrumb title={blogState?.title} />
       <Container class1="blog-wrapper home-wrapper-2 py-5">
         <div className="row set-padding ">
-          <div className="col-12">
+          <div className="col-2 ">
+            <div className="filter-card mb-3 ">
+              <h3 className="filter-title">Shop By Catergories</h3>
+              <div>
+                <ul className="ps-0">
+                  <li>Home</li>
+                  <li>Our Store</li>
+                  <li>Blogs</li>
+                  <li>Contact</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="col-9">
             <div className="row">
               <div className="single-blog-card">
                 <Link to="/blogs" className="d-flex align-items-center gap-10">
@@ -36,10 +49,11 @@ const SingleBlog = () => {
                 <h3 className="title">{blogState?.title}</h3>
                 <img
                   src={
-                    blogState?.images[0].url ? blogState?.images[0].url : blog
+                    blogState?.images[0]?.url ? blogState?.images[0]?.url : blog
                   }
                   className="img-fluid w100 my-4"
                   alt="blog"
+                  style={{ maxHeight: "350px" }}
                 />
                 <p
                   dangerouslySetInnerHTML={{

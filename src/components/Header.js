@@ -113,6 +113,11 @@ const Header = () => {
                 <span className="input-group-text p-2" id="basic-addon2">
                   <BsSearch className="fs-6" />
                 </span>
+                {/* <div class="input-group-btn">
+                  <button class="btn btn-default" type="submit">
+                    <img src="pages/main/loupe.png" />
+                  </button>
+                </div> */}
               </div>
             </div>
             <div className="col-5">

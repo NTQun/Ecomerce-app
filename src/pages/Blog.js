@@ -34,12 +34,12 @@ const Blog = () => {
               </div>
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-10">
             <div className="row">
               {blogState
                 ? blogState?.map((item, index) => {
                     return (
-                      <div className="col-6 mb-3" key={index}>
+                      <div className="col-6 mb-3 blog-page" key={index}>
                         <BlogCard
                           id={item?._id}
                           title={item?.title}
