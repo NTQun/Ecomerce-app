@@ -8,7 +8,6 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { base_url, config } from "../utils/axiosConfig";
 import {
-  applyCoupon,
   createAnOrder,
   deleteUserCart,
   getUserCart,
@@ -20,8 +19,7 @@ const shippingSchema = yup.object({
   mobile: yup.string().required("mobile is Required"),
   email: yup.string().required("Email is Required"),
   address: yup.string().required("Address Detail are Required"),
-  // city: yup.string().required("City is Required"),
-  // country: yup.string().required("Country is Required"),
+  // typecheckout: yup.string().required("Checkout type is Required"),
   other: yup.string().required("Other is Required"),
 });
 
@@ -32,6 +30,7 @@ const Checkout = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
+  const [type, setType] = useState("");
   const [paymentInfo, setPaymentInfo] = useState({
     razorpayPaymentId: "",
     razorpayOrderId: "",
@@ -71,22 +70,24 @@ const Checkout = () => {
     dispatch(getUserCart(config2));
   }, []);
   const formik = useFormik({
+    enableReinitialize: true,
+
     initialValues: {
-      firstName: authState.firstname || "",
-      lastName: authState.lastname || "",
-      email: authState.email || "",
-      mobile: authState.mobile || "",
+      firstName: authState?.firstname || "",
+      lastName: authState?.lastname || "",
+      email: authState?.email || "",
+      mobile: authState?.mobile || "",
       address: "",
-      // city: "",
       country: "",
       other: "",
     },
     validationSchema: shippingSchema,
     onSubmit: (values) => {
+      console.log(1);
       setShippingInfo(values);
       localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
-        checkOuteHandler();
+        checkout();
       }, 500);
     },
   });
@@ -103,6 +104,24 @@ const Checkout = () => {
     }
     setCartProductState(items);
   }, []);
+
+  const checkout = () => {
+    if (type === "COD") {
+      dispatch(
+        createAnOrder({
+          totalPrice: totalAmount + 3,
+          totalPriceAfterDiscount: totalAmount + 3,
+          orderItems: cartProductState,
+          // paymentInfo: result.data,
+          shippingInfo: JSON.parse(localStorage.getItem("address")),
+          typecheckout: type,
+        })
+      );
+      localStorage.removeItem("address");
+      dispatch(deleteUserCart());
+      dispatch(resetState());
+    } else checkOuteHandler();
+  };
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -170,6 +189,7 @@ const Checkout = () => {
             orderItems: cartProductState,
             paymentInfo: result.data,
             shippingInfo: JSON.parse(localStorage.getItem("address")),
+            // typecheckout:
           })
         );
         localStorage.removeItem("address");
@@ -240,24 +260,6 @@ const Checkout = () => {
                 action=""
                 className="d-flex gap-15 flex-wrap justify-content-between"
               >
-                {/* <div className="w-100">
-                  <select
-                    name="country"
-                    className="form-control form-select"
-                    onChange={formik.handleChange("country")}
-                    onBlur={formik.handleBlur("country")}
-                    values={formik.values.country}
-                    id=""
-                  >
-                    <option value="select" selected>
-                      Selected Contry
-                    </option>
-                    <option value="Viet Name">Viet Name</option>
-                  </select>
-                  <div className="error ms-2 my-1">
-                    {formik.touched.country && formik.errors.country}
-                  </div>
-                </div> */}
                 <div className="flex-grow-1">
                   <label htmlFor="">First Name</label>
                   <input
@@ -265,7 +267,7 @@ const Checkout = () => {
                     placeholder="First Name"
                     name="firstName"
                     onChange={formik.handleChange("firstName")}
-                    defaultValue={authState.firstname}
+                    defaultValue={authState?.firstname}
                     onBlur={formik.handleBlur("firstName")}
                     values={formik.values.firstName}
                     className="form-control"
@@ -280,7 +282,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="Last Name"
                     name="lastName"
-                    defaultValue={authState.lastname}
+                    defaultValue={authState?.lastname}
                     onChange={formik.handleChange("lastName")}
                     onBlur={formik.handleBlur("lastName")}
                     values={formik.values.lastName}
@@ -296,7 +298,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="Phone"
                     name="phone"
-                    defaultValue={authState.mobile}
+                    defaultValue={authState?.mobile}
                     onChange={formik.handleChange("phone")}
                     onBlur={formik.handleBlur("phone")}
                     values={formik.values.phone}
@@ -313,7 +315,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="Email"
                     name="email"
-                    defaultValue={authState.email}
+                    defaultValue={authState?.email}
                     onChange={formik.handleChange("email")}
                     onBlur={formik.handleBlur("email")}
                     values={formik.values.email}
@@ -355,28 +357,23 @@ const Checkout = () => {
                     {formik.touched.other && formik.errors.other}
                   </div>
                 </div>
-                {/* <div className="flex-grow-1">
-                  <label htmlFor="">City</label>
+                <div className="flex-grow-1">
+                  <label htmlFor="">Checkout type</label>
 
                   <select
-                    name="City"
-                    onChange={formik.handleChange("city")}
-                    onBlur={formik.handleBlur("city")}
-                    values={formik.values.city}
+                    name="typecheckout"
+                    onChange={(e) => setType(e.target.value)}
+                    values={type}
                     className="form-control form-select"
                     id=""
                   >
                     <option value="" selected disabled>
-                      Select City
+                      Select Type CheckOut
                     </option>
-                    <option value="HCM">HCM</option>
-                    <option value="Cần Thơ">Cần Thơ</option>
-                    <option value="Sóc Trăng">Sóc Trăng</option>
-                    <option value="Hậu Giang">Hậu Giang</option>
-                    <option value="Vĩnh Long">Vĩnh Long</option>
-                    <option value="Trà Vinh">Trà Vinh</option>
+                    <option value="COD">COD</option>
+                    <option value="OnlineCheckout">OnlineCheckout</option>
                   </select>
-                </div> */}
+                </div>
                 <div className="w-100">
                   <div className="d-flex justify-content-between align-items-center">
                     <Link to="/cart" className="text-dark">
@@ -386,11 +383,7 @@ const Checkout = () => {
                     <Link to="/cart" className="button">
                       Continue to Shipping
                     </Link>
-                    <button
-                      className="button"
-                      type="submit"
-                      onClick={checkOuteHandler}
-                    >
+                    <button className="button" type="submit" onClick={checkout}>
                       Place Order
                     </button>
                   </div>

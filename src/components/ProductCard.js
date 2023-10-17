@@ -26,7 +26,7 @@ const ProductCard = (props) => {
               location.pathname == "/product" ? `gr-${grid}` : "col-3"
             } `}
           >
-            <div className="product-card position-relative">
+            <div className="product-card position-relative h-100">
               <div className="wishlist-icon position-absolute">
                 <button
                   className="border-0 bg-transparent"
