@@ -31,7 +31,6 @@ const Profile = () => {
       Accept: "application/json",
     },
   };
-
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.auth.user);
   const [edit, setEdit] = useState(true);

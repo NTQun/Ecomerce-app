@@ -14,7 +14,21 @@ const getBlog = async (id) => {
   }
 };
 
+const addRatingBlog = async (data) => {
+  const response = await axios.put(
+    `${base_url}blog/rating`,
+    {
+      data,
+    },
+    config
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
 export const blogService = {
   getBlogs,
   getBlog,
+  addRatingBlog,
 };

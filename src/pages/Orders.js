@@ -25,7 +25,7 @@ const Orders = () => {
                 <h5>Total Amount </h5>
               </div>
               <div className="col-3">
-                <h5>Total Amount After Discount </h5>
+                <h5>Type Checkout </h5>
               </div>
               <div className="col-3">
                 <h5>Status </h5>
@@ -48,7 +48,7 @@ const Orders = () => {
                       <p>{item?.totalPrice} </p>
                     </div>
                     <div className="col-3">
-                      <p>{item?.totalPriceAfterDiscount}</p>
+                      <p>{item?.typecheckout}</p>
                     </div>
                     <div className="col-3">
                       <p>{item?.orderStatus}</p>

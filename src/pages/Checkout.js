@@ -121,6 +121,7 @@ const Checkout = () => {
       dispatch(deleteUserCart());
       dispatch(resetState());
     } else checkOuteHandler();
+    navigate("/my-orders");
   };
 
   const loadScript = (src) => {

@@ -21,6 +21,13 @@ const Home = () => {
   const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const categoryState = [];
+  for (let index = 0; index < productState.length; index++) {
+    categoryState.push({
+      category: productState[index].category,
+      image: productState[index].images[0],
+    });
+  }
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
   };
@@ -172,60 +179,26 @@ const Home = () => {
             <div className="col-12">
               <div className="categories flex-wrap d-flex justify-content-between align-items-center">
                 <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Cameras</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/camera.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Smart Tv</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/tv.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Smart Watches</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/tv.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Music & Gaming</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/headphone.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Cameras</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/camera.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Smart Tv</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/tv.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Smart Watches</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/tv.jpg" alt="camera" />
-                </div>
-                <div className="d-flex gap align-items-center">
-                  <div>
-                    <h6>Music & Gaming</h6>
-                    <p>10 Item</p>
-                  </div>
-                  <img src="images/headphone.jpg" alt="camera" />
+                  {categoryState &&
+                    categoryState.map((item, index) => {
+                      return (
+                        <>
+                          <Link
+                            key={index}
+                            className="d-flex gap align-items-center border px-2 mx-2"
+                            to={`/product/category/${item?.category}`}
+                          >
+                            <h6>{item?.category}</h6>
+                            <img
+                              src={item?.image?.url}
+                              alt="img category"
+                              height={"130px"}
+                              width={"130px"}
+                            />
+                          </Link>
+                        </>
+                      );
+                    })}
                 </div>
               </div>
             </div>
