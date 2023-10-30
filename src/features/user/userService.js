@@ -52,7 +52,6 @@ const updateProductFromCart = async (cartDetail) => {
 };
 
 const createOrder = async (orderDetail) => {
-  console.log(orderDetail);
   const response = await axios.post(
     `${base_url}user/cart/create-order`,
     orderDetail,
@@ -107,6 +106,55 @@ const emptyCart = async () => {
   }
 };
 
+const updateOrder = async (data) => {
+  const responce = await axios.put(
+    `${base_url}user/cancel/${data.id}`,
+    { status: data.status },
+    config
+  );
+
+  return responce.data;
+};
+
+const getAdd = async () => {
+  const responce = await axios.get(`${base_url}user/address/`, config);
+
+  return responce.data;
+};
+
+const getoneAdd = async (id) => {
+  const responce = await axios.get(`${base_url}user/address/${id}`, config);
+
+  return responce.data;
+};
+
+const updateAdd = async (data) => {
+  const responce = await axios.put(
+    `${base_url}user/update-address/${data.id}`,
+    data.address,
+    config
+  );
+
+  return responce.data;
+};
+const newAdd = async (data) => {
+  const responce = await axios.post(
+    `${base_url}user/save-address/`,
+    data,
+    config
+  );
+
+  return responce.data;
+};
+const deleteAdd = async (id) => {
+  const responce = await axios.delete(
+    `${base_url}user/delete-address/${id}`,
+    config
+  );
+
+  return responce.data;
+};
+
 export const authService = {
   register,
   login,
@@ -121,4 +169,10 @@ export const authService = {
   forgotPassToken,
   resetPass,
   emptyCart,
+  updateOrder,
+  getAdd,
+  deleteAdd,
+  updateAdd,
+  newAdd,
+  getoneAdd,
 };

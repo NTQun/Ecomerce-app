@@ -39,16 +39,16 @@ const rateProduct = async (data) => {
     return responce.data;
   }
 };
-const getUserComment = async (id) => {
-  const responce = await axios.get(`${base_url}product/comment/${id}`);
-  if (responce.data) {
-    return responce.data;
-  }
-};
+// const getUserComment = async (id) => {
+//   const responce = await axios.get(`${base_url}product/comment/${id}`);
+//   if (responce.data) {
+//     return responce.data;
+//   }
+// };
 export const productService = {
   getProducts,
   addToWishlist,
   getSingleProduct,
   rateProduct,
-  getUserComment,
+  // getUserComment,
 };

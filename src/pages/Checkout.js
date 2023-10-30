@@ -10,6 +10,7 @@ import { base_url, config } from "../utils/axiosConfig";
 import {
   createAnOrder,
   deleteUserCart,
+  getAdd,
   getUserCart,
   resetState,
 } from "../features/user/userSlice";
@@ -20,17 +21,25 @@ const shippingSchema = yup.object({
   email: yup.string().required("Email is Required"),
   address: yup.string().required("Address Detail are Required"),
   // typecheckout: yup.string().required("Checkout type is Required"),
-  other: yup.string().required("Other is Required"),
 });
 
 const Checkout = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const authState = useSelector((state) => state?.auth.user);
+
   const cartState = useSelector((state) => state?.auth?.cartProducts);
+  const addState = useSelector((state) => state?.auth?.address);
   const [totalAmount, setTotalAmount] = useState(null);
   const [shippingInfo, setShippingInfo] = useState(null);
   const [type, setType] = useState("");
+  const [firstName, setFisrtName] = useState("");
+  const [lastName, setLastNamn] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+
+  const [newaddress, setNewAddress] = useState("");
+
   const [paymentInfo, setPaymentInfo] = useState({
     razorpayPaymentId: "",
     razorpayOrderId: "",
@@ -59,38 +68,28 @@ const Checkout = () => {
   }, [cartState]);
 
   useEffect(() => {
-    if (
-      authState.orderedProduct !== null &&
-      authState?.orderedProduct?.success == true
-    ) {
-      navigate("/my-orders");
-    }
-  }, [authState]);
-  useEffect(() => {
     dispatch(getUserCart(config2));
+    dispatch(getAdd());
   }, []);
-  const formik = useFormik({
-    enableReinitialize: true,
 
-    initialValues: {
-      firstName: authState?.firstname || "",
-      lastName: authState?.lastname || "",
-      email: authState?.email || "",
-      mobile: authState?.mobile || "",
-      address: "",
-      country: "",
-      other: "",
-    },
-    validationSchema: shippingSchema,
-    onSubmit: (values) => {
-      console.log(1);
-      setShippingInfo(values);
-      localStorage.setItem("address", JSON.stringify(values));
-      setTimeout(() => {
-        checkout();
-      }, 500);
-    },
-  });
+  // useEffect(() => {
+  //   if (
+  //     authStates?.orderedProduct !== null &&
+  //     authStates?.orderedProduct?.success == true
+  //   ) {
+  //     navigate("/my-orders");
+  //   }
+  // }, [authStates]);
+
+  console.log([firstName, lastName, email, mobile, address, newaddress]);
+
+  const info = {
+    firstName: firstName !== "" ? firstName : authState?.firstname,
+    lastName: lastName !== "" ? lastName : authState?.lastname,
+    email: email !== "" ? email : authState?.email,
+    mobile: mobile !== "" ? lastName : authState?.mobile,
+    address: address == "other" ? newaddress : address,
+  };
 
   useEffect(() => {
     let items = [];
@@ -104,7 +103,6 @@ const Checkout = () => {
     }
     setCartProductState(items);
   }, []);
-
   const checkout = () => {
     if (type === "COD") {
       dispatch(
@@ -113,15 +111,14 @@ const Checkout = () => {
           totalPriceAfterDiscount: totalAmount + 3,
           orderItems: cartProductState,
           // paymentInfo: result.data,
-          shippingInfo: JSON.parse(localStorage.getItem("address")),
+          shippingInfo: info,
           typecheckout: type,
         })
       );
-      localStorage.removeItem("address");
+      // localStorage.removeItem("address");
       dispatch(deleteUserCart());
       dispatch(resetState());
     } else checkOuteHandler();
-    navigate("/my-orders");
   };
 
   const loadScript = (src) => {
@@ -163,7 +160,6 @@ const Checkout = () => {
       currency: currency,
       name: "Trung Quan.",
       description: "Test Transaction",
-      // image: { logo },
       order_id: order_id,
       handler: async function (response) {
         const data = {
@@ -189,8 +185,7 @@ const Checkout = () => {
             totalPriceAfterDiscount: totalAmount,
             orderItems: cartProductState,
             paymentInfo: result.data,
-            shippingInfo: JSON.parse(localStorage.getItem("address")),
-            // typecheckout:
+            shippingInfo: info,
           })
         );
         localStorage.removeItem("address");
@@ -213,6 +208,27 @@ const Checkout = () => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   };
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      firstName: authState?.firstname || "",
+      lastName: authState?.lastname || "",
+      email: authState?.email || "",
+      mobile: authState?.mobile || "",
+      address: "",
+      // typecheckout: "",
+    },
+    validationSchema: shippingSchema,
+    onSubmit: async (values) => {
+      // await setShippingInfo(values);
+      // console.log(values);
+      // localStorage.setItem("address", JSON.stringify(values));
+      // setTimeout(() => {
+      //   checkout();
+      // }, 300);
+    },
+  });
 
   return (
     <>
@@ -267,7 +283,8 @@ const Checkout = () => {
                     type="text"
                     placeholder="First Name"
                     name="firstName"
-                    onChange={formik.handleChange("firstName")}
+                    // onChange={formik.handleChange("firstName")}
+                    onChange={(e) => setFisrtName(e.target.value)}
                     defaultValue={authState?.firstname}
                     onBlur={formik.handleBlur("firstName")}
                     values={formik.values.firstName}
@@ -284,7 +301,8 @@ const Checkout = () => {
                     placeholder="Last Name"
                     name="lastName"
                     defaultValue={authState?.lastname}
-                    onChange={formik.handleChange("lastName")}
+                    // onChange={formik.handleChange("lastName")}
+                    onChange={(e) => setLastNamn(e.target.value)}
                     onBlur={formik.handleBlur("lastName")}
                     values={formik.values.lastName}
                     className="form-control"
@@ -294,19 +312,20 @@ const Checkout = () => {
                   </div>
                 </div>
                 <div className="flex-grow-1">
-                  <label htmlFor="">Phone</label>
+                  <label htmlFor="">Mobile</label>
                   <input
                     type="text"
-                    placeholder="Phone"
-                    name="phone"
+                    placeholder="Moibile"
+                    name="mobile"
                     defaultValue={authState?.mobile}
-                    onChange={formik.handleChange("phone")}
-                    onBlur={formik.handleBlur("phone")}
-                    values={formik.values.phone}
+                    // onChange={formik.handleChange("mobile")}
+                    onChange={(e) => setMobile(e.target.value)}
+                    onBlur={formik.handleBlur("mobile")}
+                    values={formik.values.mobile}
                     className="form-control"
                   />
                   <div className="error ms-2 my-1">
-                    {formik.touched.phone && formik.errors.phone}
+                    {formik.touched.mobile && formik.errors.mobile}
                   </div>
                 </div>{" "}
                 <div className="flex-grow-1">
@@ -317,7 +336,7 @@ const Checkout = () => {
                     placeholder="Email"
                     name="email"
                     defaultValue={authState?.email}
-                    onChange={formik.handleChange("email")}
+                    onChange={(e) => setEmail(e.target.value)}
                     onBlur={formik.handleBlur("email")}
                     values={formik.values.email}
                     className="form-control"
@@ -327,36 +346,44 @@ const Checkout = () => {
                   </div>
                 </div>
                 <div className="w-100">
-                  <label htmlFor="">Address</label>
+                  <label htmlFor="">Select address</label>
 
-                  <input
-                    type="text"
-                    placeholder="Address"
+                  <select
                     name="address"
-                    onChange={formik.handleChange("address")}
-                    onBlur={formik.handleBlur("address")}
+                    onChange={(e) => setAddress(e.target.value)}
                     values={formik.values.address}
-                    className="form-control"
-                  />
-                  <div className="error ms-2 my-1">
-                    {formik.touched.address && formik.errors.address}
-                  </div>
-                </div>
-                <div className="w-100">
-                  <label htmlFor="">Apartment, Suite ,etc</label>
+                    onBlur={formik.handleBlur("address")}
+                    className="form-control form-select"
+                    id=""
+                  >
+                    <option value="" selected disabled>
+                      Select Address
+                    </option>
+                    {addState?.map((item) => {
+                      return (
+                        <option key={item?._id} value={item.address}>
+                          {item.address}
+                        </option>
+                      );
+                    })}
+                    <option value="other">Other</option>
+                  </select>
 
-                  <input
-                    type="text"
-                    placeholder="Apartment, Suite ,etc"
-                    name="other"
-                    onChange={formik.handleChange("other")}
-                    onBlur={formik.handleBlur("other")}
-                    values={formik.values.other}
-                    className="form-control"
-                  />
-                  <div className="error ms-2 my-1">
-                    {formik.touched.other && formik.errors.other}
-                  </div>
+                  {address == "other" && (
+                    <div className="flex-grow-1">
+                      <label htmlFor="">Other Address</label>
+
+                      <input
+                        type="text"
+                        placeholder="Other Address"
+                        name="address"
+                        onChange={(e) => setNewAddress(e.target.value)}
+                        onBlur={formik.handleBlur("address")}
+                        values={formik.values.address}
+                        className="form-control"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-grow-1">
                   <label htmlFor="">Checkout type</label>

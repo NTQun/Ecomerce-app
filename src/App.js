@@ -26,6 +26,8 @@ import { OpenRoutes } from "./routting/OpenRoutes";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import OurStoreCategory from "./pages/OurStoreCategory";
+import Listaddress from "./pages/Addreslist";
+import Newaddress from "./pages/NewAddress";
 function App() {
   return (
     <>
@@ -82,6 +84,30 @@ function App() {
               element={
                 <PrivateRoutes>
                   <Wishlist />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="new-address"
+              element={
+                <PrivateRoutes>
+                  <Newaddress />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="new-address/:id"
+              element={
+                <PrivateRoutes>
+                  <Newaddress />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="list-address"
+              element={
+                <PrivateRoutes>
+                  <Listaddress />
                 </PrivateRoutes>
               }
             />

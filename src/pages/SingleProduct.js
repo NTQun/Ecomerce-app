@@ -3,9 +3,7 @@ import ReactStars from "react-rating-stars-component";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
-import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
-import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import watch from "../images/watch.jpg";
@@ -15,7 +13,6 @@ import {
   getAProduct,
   getAllProducts,
   addRating,
-  getComment,
   resetState,
 } from "../features/product/productSlice";
 import { toast } from "react-toastify";
@@ -32,7 +29,6 @@ const SingleProduct = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const productState = useSelector((state) => state?.product?.singleProduct);
   const productsState = useSelector((state) => state?.product?.product);
-  const commentState = useSelector((state) => state?.product?.commentUser);
 
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
@@ -55,7 +51,6 @@ const SingleProduct = () => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart(config2));
     getAllProducts();
-    dispatch(getComment(getProductId));
   }, []);
 
   useEffect(() => {
@@ -98,15 +93,15 @@ const SingleProduct = () => {
 
   const [orderedProduct] = useState(true);
 
-  const copyToClipboard = (text) => {
-    console.log("text", text);
-    var textField = document.createElement("textarea");
-    textField.innerText = text;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand("copy");
-    textField.remove();
-  };
+  // const copyToClipboard = (text) => {
+  //   console.log("text", text);
+  //   var textField = document.createElement("textarea");
+  //   textField.innerText = text;
+  //   document.body.appendChild(textField);
+  //   textField.select();
+  //   document.execCommand("copy");
+  //   textField.remove();
+  // };
 
   const closeModal = () => {};
 
@@ -136,7 +131,7 @@ const SingleProduct = () => {
       dispatch(
         addRating({ star: star, comment: comment, prodId: getProductId })
       );
-      toast.success("Add Rating Success");
+      // toast.success("Add Rating Success");
       setTimeout(() => {
         dispatch(getAProduct(getProductId));
         dispatch(resetState());
@@ -267,11 +262,11 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
-                  <div>
+                  {/* <div>
                     <a href="#/">
                       <TbGitCompare className="fs-5 me-2" /> Add to Compare
                     </a>
-                  </div>
+                  </div> */}
                   <div>
                     <a>
                       <AiOutlineHeart
@@ -284,7 +279,7 @@ const SingleProduct = () => {
                     </a>
                   </div>
                 </div>
-                <div className="d-flex gap-10 flex-column  my-3">
+                {/* <div className="d-flex gap-10 flex-column  my-3">
                   <h3 className="product-heading">Shipping & Returns :</h3>
                   <p className="product-data">
                     Free shipping and returns available on all orders! <br /> We
@@ -302,13 +297,26 @@ const SingleProduct = () => {
                   >
                     Copy Product Link
                   </a>
+                </div> */}
+              </div>
+              {/* <Container class1="description-wrapper py-5 home-wrapper-2"> */}
+              <div className="row">
+                <div className="col-12">
+                  <h4>Description</h4>
+                  <div
+                    className="bg-white p-3"
+                    dangerouslySetInnerHTML={{
+                      __html: productState?.description,
+                    }}
+                  ></div>
                 </div>
               </div>
+              {/* </Container> */}
             </div>
           </div>
         </div>
       </Container>
-      <Container class1="description-wrapper py-5 home-wrapper-2">
+      {/* <Container class1="description-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>
@@ -320,7 +328,7 @@ const SingleProduct = () => {
             ></div>
           </div>
         </div>
-      </Container>
+      </Container> */}
       <Container class1="reviews-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -381,7 +389,7 @@ const SingleProduct = () => {
                     }}
                   ></textarea>
                 </div>
-                <div className="d-flex justify-content-end">
+                <div className="d-flex justify-content-end pt-1">
                   <button
                     onClick={addRatingToProduct}
                     className="button border-0"
@@ -409,9 +417,9 @@ const SingleProduct = () => {
                             />
                           </div>
                           <p className="mt-3 text-dark">
-                            <p>
-                              {commentState[index]?.firstname}
-                              {commentState[index]?.lastname}
+                            <p style={{ color: "blue" }}>
+                              {item?.postedby[0]?.firstname}-{" "}
+                              {item?.postedby[0]?.lastname}
                             </p>
                             {item?.comment}
                           </p>

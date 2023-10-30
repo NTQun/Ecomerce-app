@@ -44,16 +44,16 @@ export const addRating = createAsyncThunk(
     }
   }
 );
-export const getComment = createAsyncThunk(
-  "product/comment",
-  async (data, thunkAPI) => {
-    try {
-      return await productService.getUserComment(data);
-    } catch (errors) {
-      return thunkAPI.rejectWithValue(errors);
-    }
-  }
-);
+// export const getComment = createAsyncThunk(
+//   "product/comment",
+//   async (data, thunkAPI) => {
+//     try {
+//       return await productService.getUserComment(data);
+//     } catch (errors) {
+//       return thunkAPI.rejectWithValue(errors);
+//     }
+//   }
+// );
 export const resetState = createAction("Reset_all");
 
 const productState = {
@@ -140,25 +140,6 @@ export const productSlice = createSlice({
         state.message = action.error;
         if (state.isError) {
           toast.error("Something Error");
-        }
-      })
-      .addCase(getComment.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(getComment.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
-        state.isSuccess = true;
-        state.commentUser = action.payload;
-        state.message = "Rating Added Successfully";
-      })
-      .addCase(getComment.rejected, (state, action) => {
-        state.isError = true;
-        state.isLoading = false;
-        state.isSuccess = false;
-        state.message = action.error;
-        if (state.isError) {
-          toast.error(state);
         }
       });
   },

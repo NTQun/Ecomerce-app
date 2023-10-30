@@ -27,7 +27,7 @@ const ProductCard = (props) => {
             } `}
           >
             <div className="product-card position-relative h-100">
-              <div className="wishlist-icon position-absolute">
+              <div className="wishlist-icon position-absolute icon">
                 <button
                   className="border-0 bg-transparent"
                   onClick={(e) => {
@@ -42,16 +42,16 @@ const ProductCard = (props) => {
                   src={item?.images[0]?.url}
                   className="img-fluid w-100"
                   alt="product-image"
-                  style={{ maxHeight: "200px" }}
+                  style={{ maxHeight: "300px", maxWidth: "300px" }}
                 />
                 <img
                   src={item?.images[1]?.url}
                   className="img-fluid"
                   alt="product-image"
-                  style={{ maxHeight: "200px" }}
+                  style={{ maxHeight: "300px", maxWidth: "300px" }}
                 />
               </Link>
-              <div className="product-details">
+              <div className="product-details mt-2">
                 <h6 className="brand">{item?.brand}</h6>
                 <h5 className="product-title">{item.title}</h5>
                 <ReactStars
@@ -75,10 +75,10 @@ const ProductCard = (props) => {
                 ></p>
                 <p className="price">$ {item?.price}</p>
               </div>
-
+              {/* 
               <div className="action-bar position-absolute">
                 <div className="d-flex flex-column ">
-                  <button className="border-0 bg-transparent">
+                  <button className="border-0 bg-transparent icon">
                     <img src={prodcompare} alt="compare" />
                   </button>
                 </div>
@@ -86,18 +86,18 @@ const ProductCard = (props) => {
                 <div className="d-flex flex-column">
                   <Link
                     to={`/product/${item._id}`}
-                    className="border-0 bg-transparent"
+                    className="border-0 bg-transparent icon"
                   >
                     <img src={view} alt="view" />
                   </Link>
                 </div>
 
                 <div className="d-flex flex-column">
-                  <button className="border-0 bg-transparent">
+                  <button className="border-0 bg-transparent icon">
                     <img src={addcart} alt="addcart" />
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         );

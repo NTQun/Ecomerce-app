@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
-import logo from "../images/logo.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css";
@@ -26,10 +24,7 @@ const Header = () => {
   }
   const categoryList = new Set(categoryState);
   const list = [...categoryList];
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
+
   const getTokenFromLocalStorage = localStorage.getItem("customer")
     ? JSON.parse(localStorage.getItem("customer"))
     : null;
@@ -216,18 +211,7 @@ const Header = () => {
                   <NavLink to="/product">Our Store</NavLink>
                   <NavLink to="/blogs">Blogs</NavLink>
                   <NavLink to="/contact">Contact</NavLink>
-                  <NavLink to="/my-orders">My Orders</NavLink>
-                  {authState.user && (
-                    <div className="d-flex align-items-end ">
-                      <button
-                        className="border border-0 bg-transparent text-white text-uppercase"
-                        onClick={handleLogout}
-                        style={{ right: "10px" }}
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  )}
+                  {/* <NavLink to="/my-orders">My Orders</NavLink> */}
                 </div>
               </div>
             </div>

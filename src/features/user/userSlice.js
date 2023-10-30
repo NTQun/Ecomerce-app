@@ -144,6 +144,70 @@ export const deleteUserCart = createAsyncThunk(
   }
 );
 
+export const cancelAOrder = createAsyncThunk(
+  "order/update-order",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.updateOrder(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getAdd = createAsyncThunk(
+  "address/get-address",
+  async (thunkAPI) => {
+    try {
+      return await authService.getAdd();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getoneAdd = createAsyncThunk(
+  "address/getone-address",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getoneAdd(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const updateAdd = createAsyncThunk(
+  "address/update-address",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.updateAdd(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const newAdd = createAsyncThunk(
+  "address/new-address",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.newAdd(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAdd = createAsyncThunk(
+  "address/delete-address",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.deleteAdd(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const resetState = createAction("Reset_all");
 
 const initialState = {
@@ -424,7 +488,99 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
       })
-
+      .addCase(cancelAOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(cancelAOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.cancel = action.payload;
+      })
+      .addCase(cancelAOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(getAdd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAdd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.address = action.payload;
+      })
+      .addCase(getAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(getoneAdd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getoneAdd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.oneaddress = action.payload;
+      })
+      .addCase(getoneAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateAdd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateAdd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updateAdd = action.payload;
+      })
+      .addCase(updateAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteAdd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteAdd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deleteAdd = action.payload;
+      })
+      .addCase(deleteAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(newAdd.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(newAdd.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.newAddress = action.payload;
+        if (state.isSuccess) {
+          toast.success("Add new Address Success");
+        }
+      })
+      .addCase(newAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
       .addCase(resetState, () => initialState);
   },
 });
