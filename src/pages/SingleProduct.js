@@ -93,16 +93,6 @@ const SingleProduct = () => {
 
   const [orderedProduct] = useState(true);
 
-  // const copyToClipboard = (text) => {
-  //   console.log("text", text);
-  //   var textField = document.createElement("textarea");
-  //   textField.innerText = text;
-  //   document.body.appendChild(textField);
-  //   textField.select();
-  //   document.execCommand("copy");
-  //   textField.remove();
-  // };
-
   const closeModal = () => {};
 
   const [popularProduct, setPopularProduct] = useState([]);
@@ -148,7 +138,7 @@ const SingleProduct = () => {
           <div className="col-6">
             <div className="main-product-image">
               <div>
-                <img className="big-img" src={props.img} alt="" />
+                <img className="big-img p-2" src={props.img} alt="" />
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
@@ -209,10 +199,6 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Tags :</h3>
                   <p className="product-data">{productState?.tags}</p>
                 </div>
-                <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Availablity :</h3>
-                  <p className="product-data">In Stock</p>
-                </div>
 
                 {alreadyAdded === false && (
                   <>
@@ -225,10 +211,15 @@ const SingleProduct = () => {
                     </div>
                   </>
                 )}
+                <div className="d-flex gap-10 align-items-center my-2">
+                  <h3 className="product-heading">Available Quantity</h3>
+                  <p className="product-data">{productState?.quantity}</p>
+                </div>
+
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   {alreadyAdded === false && (
                     <>
-                      <h3 className="product-heading">Quantity :</h3>
+                      <h3 className="product-heading">Quantity buy:</h3>
                       <div className="">
                         <input
                           type="number"
@@ -246,27 +237,26 @@ const SingleProduct = () => {
                     </>
                   )}
 
-                  <div className={alreadyAdded ? "ms-0" : "ms-5"}>
-                    <button
-                      className="button signup    border-0"
-                      // data-bs-toggle="modal"
-                      // data-bs-target="#staticBackdrop"
-                      type="button"
-                      onClick={() => {
-                        alreadyAdded ? navigate("/cart") : uploadCart();
-                      }}
-                    >
-                      {alreadyAdded ? "Go to Cart" : "Add to Cart"}
-                    </button>
-                    {/* <button className="button signup">Buy It Now</button> */}
-                  </div>
+                  {productState?.quantity != 0 && (
+                    <div className={alreadyAdded ? "ms-0" : "ms-5"}>
+                      <button
+                        className="button signup    border-0"
+                        type="button"
+                        onClick={() => {
+                          alreadyAdded ? navigate("/cart") : uploadCart();
+                        }}
+                      >
+                        {alreadyAdded ? "Go to Cart" : "Add to Cart"}
+                      </button>
+                    </div>
+                  )}
+                  {productState?.quantity == 0 && (
+                    <div className={alreadyAdded ? "ms-0" : "ms-5"}>
+                      This product is out of stock
+                    </div>
+                  )}
                 </div>
                 <div className="d-flex align-items-center gap-15">
-                  {/* <div>
-                    <a href="#/">
-                      <TbGitCompare className="fs-5 me-2" /> Add to Compare
-                    </a>
-                  </div> */}
                   <div>
                     <a>
                       <AiOutlineHeart
@@ -279,27 +269,8 @@ const SingleProduct = () => {
                     </a>
                   </div>
                 </div>
-                {/* <div className="d-flex gap-10 flex-column  my-3">
-                  <h3 className="product-heading">Shipping & Returns :</h3>
-                  <p className="product-data">
-                    Free shipping and returns available on all orders! <br /> We
-                    ship all US domestic orders within
-                    <b>5-10 business days!</b>
-                  </p>
-                </div>
-                <div className="d-flex gap-10 align-items-center my-3">
-                  <h3 className="product-heading">Product Link:</h3>
-                  <a
-                    href="javascript:void(0);"
-                    onClick={() => {
-                      copyToClipboard(window.location.href);
-                    }}
-                  >
-                    Copy Product Link
-                  </a>
-                </div> */}
               </div>
-              {/* <Container class1="description-wrapper py-5 home-wrapper-2"> */}
+
               <div className="row">
                 <div className="col-12">
                   <h4>Description</h4>
@@ -311,24 +282,11 @@ const SingleProduct = () => {
                   ></div>
                 </div>
               </div>
-              {/* </Container> */}
             </div>
           </div>
         </div>
       </Container>
-      {/* <Container class1="description-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h4>Description</h4>
-            <div
-              className="bg-white p-3"
-              dangerouslySetInnerHTML={{
-                __html: productState?.description,
-              }}
-            ></div>
-          </div>
-        </div>
-      </Container> */}
+
       <Container class1="reviews-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -442,61 +400,6 @@ const SingleProduct = () => {
           <ProductCard data={popularProduct} />
         </div>
       </Container>
-
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered ">
-          <div className="modal-content">
-            <div className="modal-header py-0 border-0">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body py-0">
-              <div className="d-flex align-items-center">
-                <div className="flex-grow-1 w-50">
-                  <img src={watch} className="img-fluid" alt="product imgae" />
-                </div>
-                <div className="d-flex flex-column flex-grow-1 w-50">
-                  <h6 className="mb-3">Apple Watch</h6>
-                  <p className="mb-1">Quantity: asgfd</p>
-                  <p className="mb-1">Color: asgfd</p>
-                  <p className="mb-1">Size: asgfd</p>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer border-0 py-0 justify-content-center gap-30">
-              <button type="button" className="button" data-bs-dismiss="modal">
-                View My Cart
-              </button>
-              <button type="button" className="button signup">
-                Checkout
-              </button>
-            </div>
-            <div className="d-flex justify-content-center py-3">
-              <Link
-                className="text-dark"
-                to="/product"
-                onClick={() => {
-                  closeModal();
-                }}
-              >
-                Continue To Shopping
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };

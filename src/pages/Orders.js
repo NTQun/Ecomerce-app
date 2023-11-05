@@ -4,6 +4,9 @@ import BreadCrumb from "../components/BreadCrumb";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { cancelAOrder, getOrders } from "../features/user/userSlice";
+import { quantityCancelOrder } from "../features/product/productSlice";
+import { Link } from "react-router-dom";
+import CustomInput from "./../components/CustomInput";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -88,12 +91,34 @@ const Orders = () => {
                           <button
                             className="p-1"
                             type="button"
-                            onClick={(e) =>
-                              upateOrderStatus(item?._id, "cancel")
-                            }
+                            onClick={(e) => {
+                              upateOrderStatus(item?._id, "cancel");
+                              for (
+                                let i = 0;
+                                i < item?.orderItems?.length;
+                                i++
+                              ) {
+                                dispatch(
+                                  quantityCancelOrder({
+                                    id: item?.orderItems[i]?.product._id,
+                                    quantity: item?.orderItems[i]?.quantity,
+                                  })
+                                );
+                              }
+                            }}
                           >
                             Cancel order
                           </button>
+                        </div>
+                      )}
+                      {item?.orderStatus == "cancel" && (
+                        <div className="col-2">
+                          <Link to={`/order/${item._id}`}>Comment order</Link>
+                        </div>
+                      )}
+                      {item?.orderStatus == "Delivered" && (
+                        <div className="col-2">
+                          <Link to={`/order/${item._id}`}>Comment order</Link>
                         </div>
                       )}
                       <div className="col-12">

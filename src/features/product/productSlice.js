@@ -44,16 +44,28 @@ export const addRating = createAsyncThunk(
     }
   }
 );
-// export const getComment = createAsyncThunk(
-//   "product/comment",
-//   async (data, thunkAPI) => {
-//     try {
-//       return await productService.getUserComment(data);
-//     } catch (errors) {
-//       return thunkAPI.rejectWithValue(errors);
-//     }
-//   }
-// );
+
+export const quantityAddOrder = createAsyncThunk(
+  "product/add-order-quantity",
+  async (data, thunkAPI) => {
+    try {
+      return await productService.updateQuantityOrder(data);
+    } catch (errors) {
+      return thunkAPI.rejectWithValue(errors);
+    }
+  }
+);
+
+export const quantityCancelOrder = createAsyncThunk(
+  "product/canle-order-quantity",
+  async (data, thunkAPI) => {
+    try {
+      return await productService.updateQuantityCancel(data);
+    } catch (errors) {
+      return thunkAPI.rejectWithValue(errors);
+    }
+  }
+);
 export const resetState = createAction("Reset_all");
 
 const productState = {
@@ -134,6 +146,44 @@ export const productSlice = createSlice({
         }
       })
       .addCase(addRating.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.error("Something Error");
+        }
+      })
+      .addCase(quantityAddOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(quantityAddOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.quantityAddOrder = action.payload;
+        state.message = action.error;
+      })
+      .addCase(quantityAddOrder.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.error("Something Error");
+        }
+      })
+      .addCase(quantityCancelOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(quantityCancelOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.quantityCancelOrder = action.payload;
+        state.message = action.error;
+      })
+      .addCase(quantityCancelOrder.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;

@@ -208,6 +208,50 @@ export const deleteAdd = createAsyncThunk(
     }
   }
 );
+
+export const singleOrder = createAsyncThunk(
+  "address/single-order",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.singleOrder(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const commentOrder = createAsyncThunk(
+  "comment/comment-order",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.commentOrder(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateComment = createAsyncThunk(
+  "comment/comment-update",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.updatecommentOrder(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const deleteComment = createAsyncThunk(
+  "comment/comment-delete",
+  async (data, thunkAPI) => {
+    try {
+      return await authService.deletecommentOrder(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 
 const initialState = {
@@ -576,6 +620,66 @@ export const authSlice = createSlice({
         }
       })
       .addCase(newAdd.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(singleOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(singleOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.singleOrder = action.payload;
+      })
+      .addCase(singleOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(commentOrder.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(commentOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.commentOrder = action.payload;
+      })
+      .addCase(commentOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updateComment = action.payload;
+      })
+      .addCase(updateComment.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(deleteComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deleteComment = action.payload;
+      })
+      .addCase(deleteComment.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

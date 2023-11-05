@@ -15,7 +15,6 @@ const getProducts = async (data) => {
     return response.data;
   }
 };
-
 const getSingleProduct = async (id) => {
   const response = await axios.get(`${base_url}product/${id}`);
   if (response.data) {
@@ -39,16 +38,32 @@ const rateProduct = async (data) => {
     return responce.data;
   }
 };
-// const getUserComment = async (id) => {
-//   const responce = await axios.get(`${base_url}product/comment/${id}`);
-//   if (responce.data) {
-//     return responce.data;
-//   }
-// };
+
+const updateQuantityOrder = async (data) => {
+  const responce = await axios.post(
+    `${base_url}product/update-quantity-order/${data.id}`,
+    { quantity: data.quantity }
+  );
+  if (responce.data) {
+    return responce.data;
+  }
+};
+
+const updateQuantityCancel = async (data) => {
+  const responce = await axios.post(
+    `${base_url}product/update-quantity-cancel/${data.id}`,
+    { quantity: data.quantity }
+  );
+  if (responce.data) {
+    return responce.data;
+  }
+};
+
 export const productService = {
   getProducts,
   addToWishlist,
   getSingleProduct,
   rateProduct,
-  // getUserComment,
+  updateQuantityOrder,
+  updateQuantityCancel,
 };

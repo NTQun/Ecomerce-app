@@ -155,6 +155,41 @@ const deleteAdd = async (id) => {
   return responce.data;
 };
 
+const singleOrder = async (id) => {
+  const responce = await axios.get(
+    `${base_url}user/single-order/${id}`,
+    config
+  );
+
+  return responce.data;
+};
+
+const commentOrder = async (data) => {
+  console.log(data);
+
+  const responce = await axios.put(`${base_url}user/comment-order/${data.id}`, {
+    comment: data.comment,
+  });
+
+  return responce.data;
+};
+const updatecommentOrder = async (data) => {
+  console.log(data);
+  const responce = await axios.put(
+    `${base_url}user/comment-update/${data.id}`,
+    { comment: data.comment }
+  );
+
+  return responce.data;
+};
+const deletecommentOrder = async (id) => {
+  const responce = await axios.put(`${base_url}user/comment-delete/${id}`, {
+    comment: "",
+  });
+
+  return responce.data;
+};
+
 export const authService = {
   register,
   login,
@@ -175,4 +210,8 @@ export const authService = {
   updateAdd,
   newAdd,
   getoneAdd,
+  singleOrder,
+  commentOrder,
+  updatecommentOrder,
+  deletecommentOrder,
 };

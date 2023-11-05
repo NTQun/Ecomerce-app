@@ -7,11 +7,14 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { base_url, config } from "../utils/axiosConfig";
+import { quantityAddOrder } from "./../features/product/productSlice";
+
 import {
   createAnOrder,
   deleteUserCart,
   getAdd,
   getUserCart,
+  newAdd,
   resetState,
 } from "../features/user/userSlice";
 const shippingSchema = yup.object({
@@ -72,17 +75,6 @@ const Checkout = () => {
     dispatch(getAdd());
   }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     authStates?.orderedProduct !== null &&
-  //     authStates?.orderedProduct?.success == true
-  //   ) {
-  //     navigate("/my-orders");
-  //   }
-  // }, [authStates]);
-
-  console.log([firstName, lastName, email, mobile, address, newaddress]);
-
   const info = {
     firstName: firstName !== "" ? firstName : authState?.firstname,
     lastName: lastName !== "" ? lastName : authState?.lastname,
@@ -90,7 +82,6 @@ const Checkout = () => {
     mobile: mobile !== "" ? lastName : authState?.mobile,
     address: address == "other" ? newaddress : address,
   };
-
   useEffect(() => {
     let items = [];
     for (let index = 0; index < cartState?.length; index++) {
@@ -115,7 +106,18 @@ const Checkout = () => {
           typecheckout: type,
         })
       );
+      if (newaddress) {
+        dispatch(newAdd(newaddress));
+      }
       // localStorage.removeItem("address");
+      for (let index = 0; index < cartState?.length; index++) {
+        dispatch(
+          quantityAddOrder({
+            id: cartState[index].productId._id,
+            quantity: cartState[index].quantity,
+          })
+        );
+      }
       dispatch(deleteUserCart());
       dispatch(resetState());
     } else checkOuteHandler();
@@ -188,7 +190,18 @@ const Checkout = () => {
             shippingInfo: info,
           })
         );
+        for (let index = 0; index < cartState?.length; index++) {
+          dispatch(
+            quantityAddOrder({
+              id: cartState[index].productId._id,
+              quantity: cartState[index].quantity,
+            })
+          );
+        }
         localStorage.removeItem("address");
+        if (newaddress) {
+          dispatch(newAdd(newaddress));
+        }
         dispatch(deleteUserCart());
         dispatch(resetState());
       },
@@ -229,6 +242,11 @@ const Checkout = () => {
       // }, 300);
     },
   });
+  const [show, setshow] = useState(false);
+
+  if (addState?.length == 0 || address == "other") {
+    setshow(true);
+  }
 
   return (
     <>
@@ -283,7 +301,7 @@ const Checkout = () => {
                     type="text"
                     placeholder="First Name"
                     name="firstName"
-                    // onChange={formik.handleChange("firstName")}
+                    //onChange={formik.handleChange("firstName")}
                     onChange={(e) => setFisrtName(e.target.value)}
                     defaultValue={authState?.firstname}
                     onBlur={formik.handleBlur("firstName")}
@@ -301,7 +319,7 @@ const Checkout = () => {
                     placeholder="Last Name"
                     name="lastName"
                     defaultValue={authState?.lastname}
-                    // onChange={formik.handleChange("lastName")}
+                    //onChange={formik.handleChange("lastName")}
                     onChange={(e) => setLastNamn(e.target.value)}
                     onBlur={formik.handleBlur("lastName")}
                     values={formik.values.lastName}
@@ -318,7 +336,7 @@ const Checkout = () => {
                     placeholder="Moibile"
                     name="mobile"
                     defaultValue={authState?.mobile}
-                    // onChange={formik.handleChange("mobile")}
+                    //onChange={formik.handleChange("mobile")}
                     onChange={(e) => setMobile(e.target.value)}
                     onBlur={formik.handleBlur("mobile")}
                     values={formik.values.mobile}
@@ -348,28 +366,29 @@ const Checkout = () => {
                 <div className="w-100">
                   <label htmlFor="">Select address</label>
 
-                  <select
-                    name="address"
-                    onChange={(e) => setAddress(e.target.value)}
-                    values={formik.values.address}
-                    onBlur={formik.handleBlur("address")}
-                    className="form-control form-select"
-                    id=""
-                  >
-                    <option value="" selected disabled>
-                      Select Address
-                    </option>
-                    {addState?.map((item) => {
-                      return (
-                        <option key={item?._id} value={item.address}>
-                          {item.address}
-                        </option>
-                      );
-                    })}
-                    <option value="other">Other</option>
-                  </select>
-
-                  {address == "other" && (
+                  {addState?.length && (
+                    <select
+                      name="address"
+                      onChange={(e) => setAddress(e.target.value)}
+                      values={formik.values.address}
+                      onBlur={formik.handleBlur("address")}
+                      className="form-control form-select"
+                      id=""
+                    >
+                      <option value="" selected disabled>
+                        Select Address
+                      </option>
+                      {addState?.map((item) => {
+                        return (
+                          <option key={item?._id} value={item.address}>
+                            {item.address}
+                          </option>
+                        );
+                      })}
+                      <option value="other">Other</option>
+                    </select>
+                  )}
+                  {show && (
                     <div className="flex-grow-1">
                       <label htmlFor="">Other Address</label>
 

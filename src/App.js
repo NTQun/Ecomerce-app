@@ -28,6 +28,7 @@ import Profile from "./pages/Profile";
 import OurStoreCategory from "./pages/OurStoreCategory";
 import Listaddress from "./pages/Addreslist";
 import Newaddress from "./pages/NewAddress";
+import SingpleOrder from "./pages/Singleorder";
 function App() {
   return (
     <>
@@ -117,6 +118,14 @@ function App() {
                 <OpenRoutes>
                   <Login />
                 </OpenRoutes>
+              }
+            />
+            <Route
+              path="order/:id"
+              element={
+                <PrivateRoutes>
+                  <SingpleOrder />
+                </PrivateRoutes>
               }
             />
             <Route path="forgot-password" element={<Forgotpassword />} />
