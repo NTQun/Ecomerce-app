@@ -11,6 +11,10 @@ import { resetPassword } from "../features/user/userSlice";
 
 const passwordSchema = yup.object({
   password: yup.string().required("Password is required"),
+  confirmpassword: yup
+    .string()
+    .required("Password is required")
+    .oneOf([yup.ref("password")], "Mật khẩu không khớp"),
 });
 const Resetpassword = () => {
   const location = useLocation();
@@ -53,6 +57,19 @@ const Resetpassword = () => {
                 />
                 <div className="error">
                   {formik.touched.password && formik.errors.password}
+                </div>
+                <CustomInput
+                  type="password"
+                  label="Confirm Password"
+                  id="pass"
+                  name="confirmpassword"
+                  onChng={formik.handleChange("confirmpassword")}
+                  onBlr={formik.handleBlur("confirmpassword")}
+                  val={formik.values.confirmpassword}
+                />
+                <div className="error mt-2">
+                  {formik.touched.confirmpassword &&
+                    formik.errors.confirmpassword}
                 </div>
                 <div>
                   <div className="mt-3 d-flex justify-content-center gap-15  align-items-center">

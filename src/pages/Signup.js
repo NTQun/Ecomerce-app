@@ -18,6 +18,10 @@ const signUpSchema = yup.object({
     .required("Email Address is Required"),
   mobile: yup.string().required("Mobile No is Required"),
   password: yup.string().required("Password is Required"),
+  confirmpassword: yup
+    .string()
+    .required("Password is required")
+    .oneOf([yup.ref("password")], "Mật khẩu không khớp"),
 });
 const Signup = () => {
   const dispatch = useDispatch();
@@ -28,6 +32,7 @@ const Signup = () => {
       email: "",
       mobile: "",
       password: "",
+      confirmpassword: "",
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
@@ -105,6 +110,19 @@ const Signup = () => {
                 />
                 <div className="error">
                   {formik.touched.password && formik.errors.password}
+                </div>
+                <CustomInput
+                  type="password"
+                  label="Confirm Password"
+                  id="pass"
+                  name="confirmpassword"
+                  onChng={formik.handleChange("confirmpassword")}
+                  onBlr={formik.handleBlur("confirmpassword")}
+                  val={formik.values.confirmpassword}
+                />
+                <div className="error mt-2">
+                  {formik.touched.confirmpassword &&
+                    formik.errors.confirmpassword}
                 </div>
                 <div>
                   <div className=" mt-3 d-flex justify-content-center align-items-center gap-15">
