@@ -22,6 +22,7 @@ const Layout = () => {
         pauseOnHover
         theme="light"
       />
+      <ScrollToTop />
     </>
   );
 };
