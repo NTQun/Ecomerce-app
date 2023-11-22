@@ -5,8 +5,7 @@ import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import Color from "../components/Color";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import watch from "../images/watch.jpg";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,7 +17,7 @@ import {
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { addToWishlist } from "../features/product/productSlice";
-
+import { CiEdit } from "react-icons/ci";
 const SingleProduct = () => {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -85,15 +84,13 @@ const SingleProduct = () => {
   const getProductId = location.pathname.split("/")[2];
 
   const props = {
-    width: 594,
-    height: 600,
-    zoomWidth: 600,
-    img: productState?.images[0].url,
+    width: 650,
+    height: 650,
+    zoomWidth: 650,
+    img: productState?.images[0]?.url,
   };
 
   const [orderedProduct] = useState(true);
-
-  const closeModal = () => {};
 
   const [popularProduct, setPopularProduct] = useState([]);
 
@@ -129,6 +126,10 @@ const SingleProduct = () => {
     }
     return false;
   };
+
+  const value = parseInt(productState?.totalrating);
+
+  //  modal edit comment
   return (
     <>
       <Meta title={"Product Name"} />
@@ -166,7 +167,7 @@ const SingleProduct = () => {
                   <ReactStars
                     edit={false}
                     count={5}
-                    value={parseInt(productState?.totalrating)}
+                    value={productState?.totalrating}
                     size={24}
                     isHalf={true}
                     emptyIcon={<i className="far fa-star"></i>}
@@ -174,6 +175,7 @@ const SingleProduct = () => {
                     fullIcon={<i className="fa fa-star"></i>}
                     activeColor="#ffd700"
                   />
+
                   <p className="mb-0 t-review">
                     ({productState?.ratings.length} Review)
                   </p>
@@ -299,7 +301,7 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={Number(productState?.totalrating)}
+                      value={value}
                       edit={false}
                       activeColor="#ffd700"
                     />

@@ -101,7 +101,7 @@ const SingpleOrder = () => {
                 <p>{orderState?.typecheckout}</p>
               </div>
               <div className="col-2">
-                <p>{orderState?.address}</p>
+                <p>{orderState?.shippingInfo?.address}</p>
               </div>
               <div className="col-2">
                 <p>{orderState?.orderStatus}</p>
@@ -141,7 +141,7 @@ const SingpleOrder = () => {
                       </div>
                       <div className="col-2">
                         <img
-                          src={i?.product?.image.url[0]}
+                          src={i?.product?.images[0]?.url}
                           alt="IMG Product"
                           style={{ width: "40px", height: "40px" }}
                         />

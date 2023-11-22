@@ -35,10 +35,14 @@ const Orders = () => {
         <div className="status-bar mb-3">
           <select value={status} onChange={handleChange}>
             <option value="All Order">All Order</option>
+            <option value="Ordered">Ordered</option>
+
             <option value="Processed">Processed</option>
             <option value="Shipped">Shipped</option>
             <option value="Out For Delievery">Out For Delievery</option>
             <option value="Delivered">Delivered</option>
+            <option value="Success Shipped"> Success Shipped</option>
+
             <option value="cancel">Cancel</option>
           </select>
         </div>
@@ -189,16 +193,31 @@ const Orders = () => {
                         <p>{item?.typecheckout}</p>
                       </div>
                       <div className="col-2">
+                        <p>{item?.address}</p>
+                      </div>
+                      <div className="col-2">
                         <p>{item?.orderStatus}</p>
                       </div>
-                      {item?.orderStatus === "ordered" && (
+                      {item?.orderStatus == "Ordered" && (
                         <div className="col-2">
                           <button
                             className="p-1"
                             type="button"
-                            onClick={(e) =>
-                              upateOrderStatus(item?._id, "Cancel")
-                            }
+                            onClick={(e) => {
+                              upateOrderStatus(item?._id, "cancel");
+                              for (
+                                let i = 0;
+                                i < item?.orderItems?.length;
+                                i++
+                              ) {
+                                dispatch(
+                                  quantityCancelOrder({
+                                    id: item?.orderItems[i]?.product._id,
+                                    quantity: item?.orderItems[i]?.quantity,
+                                  })
+                                );
+                              }
+                            }}
                           >
                             Cancel order
                           </button>

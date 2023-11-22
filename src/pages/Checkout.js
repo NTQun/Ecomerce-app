@@ -33,7 +33,6 @@ const Checkout = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const addState = useSelector((state) => state?.auth?.address);
   const [totalAmount, setTotalAmount] = useState(null);
-  const [shippingInfo, setShippingInfo] = useState(null);
   const [type, setType] = useState("");
   const [firstName, setFisrtName] = useState("");
   const [lastName, setLastNamn] = useState("");
@@ -188,6 +187,7 @@ const Checkout = () => {
             orderItems: cartProductState,
             paymentInfo: result.data,
             shippingInfo: info,
+            typecheckout: type,
           })
         );
         for (let index = 0; index < cartState?.length; index++) {
@@ -242,11 +242,6 @@ const Checkout = () => {
       // }, 300);
     },
   });
-  const [show, setshow] = useState(false);
-
-  if (addState?.length == 0 || address == "other") {
-    setshow(true);
-  }
 
   return (
     <>
@@ -388,7 +383,7 @@ const Checkout = () => {
                       <option value="other">Other</option>
                     </select>
                   )}
-                  {show && (
+                  {address === "other" && (
                     <div className="flex-grow-1">
                       <label htmlFor="">Other Address</label>
 
@@ -397,7 +392,6 @@ const Checkout = () => {
                         placeholder="Other Address"
                         name="address"
                         onChange={(e) => setNewAddress(e.target.value)}
-                        onBlur={formik.handleBlur("address")}
                         values={formik.values.address}
                         className="form-control"
                       />
