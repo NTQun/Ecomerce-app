@@ -153,8 +153,8 @@ const SingleProduct = () => {
       );
       toast.success("update Rating Success");
       setTimeout(() => {
-        dispatch(getAProduct(getProductId));
         dispatch(resetState());
+        window.location.reload();
       }, 300);
     }
     return false;
