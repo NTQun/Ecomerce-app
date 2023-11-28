@@ -66,6 +66,27 @@ export const quantityCancelOrder = createAsyncThunk(
     }
   }
 );
+export const deleteRating = createAsyncThunk(
+  "product/delete-rating",
+  async (data, thunkAPI) => {
+    try {
+      return await productService.deleteRate(data);
+    } catch (errors) {
+      return thunkAPI.rejectWithValue(errors);
+    }
+  }
+);
+export const updateRating = createAsyncThunk(
+  "product/update-rating",
+  async (data, thunkAPI) => {
+    try {
+      return await productService.updateRate(data);
+    } catch (errors) {
+      return thunkAPI.rejectWithValue(errors);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 
 const productState = {
@@ -184,6 +205,44 @@ export const productSlice = createSlice({
         state.message = action.error;
       })
       .addCase(quantityCancelOrder.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.error("Something Error");
+        }
+      })
+      .addCase(deleteRating.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteRating.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.deleteRating = action.payload;
+        state.message = action.error;
+      })
+      .addCase(deleteRating.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+        if (state.isError) {
+          toast.error("Something Error");
+        }
+      })
+      .addCase(updateRating.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateRating.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.updateRating = action.payload;
+        state.message = action.error;
+      })
+      .addCase(updateRating.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;

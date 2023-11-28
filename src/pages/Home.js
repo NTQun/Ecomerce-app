@@ -175,107 +175,130 @@ const Home = () => {
           </div>
         </section>
       </Container>
-      {/* <Container class1="home-wrapper-2 py-3 set-padding">
-        <section className="home-wrapper-2 py-3 set-padding">
-          <div className="container-xx">
-            <div className="row">
-              <div className="col-12">
-                <div className="categories flex-wrap d-flex justify-content-between align-items-center">
-                  <div className="d-flex gap align-items-center">
-                    {categoryState &&
-                      categoryState.map((item, index) => {
-                        return (
-                          <>
-                            <Link
-                              key={index}
-                              className="d-flex gap align-items-center border px-2 mx-2"
-                              to={`/product/category/${item?.category}`}
-                            >
-                              <h6>{item?.category}</h6>
-                              <img
-                                src={item?.image?.url}
-                                alt="img category"
-                                height={"130px"}
-                                width={"130px"}
-                              />
-                            </Link>
-                          </>
-                        );
-                      })}
-                  </div>
+      <Container class1="home-wrapper-2 py-5">
+        <div className="row">
+          <div className="col-12">
+            <div className="categories d-flex justify-content-between flex-wrap align-items-center">
+              <div
+                className="d-flex align-items-center "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/HeadPhone");
+                }}
+              >
+                <div>
+                  <h6>HeadPhone </h6>
                 </div>
+                <img src="images/headphone.jpg" alt="camera" />
               </div>
-            </div>
-          </div>
-        </section>
-      </Container> */}
-      {/* <section className="famous-wrapper py-5 home-wrapper-2 set-padding">
-        <div className="container-xx">
-          <div className="row">
-            <div className="col-3">
-              <div className="famous-card position-relative">
-                <img
-                  className="img-fluid"
-                  src="images/famous-01.webp"
-                  alt="famous"
-                />
-                <div className="famous-content position-absolute text-white">
-                  <h5 className="text-white">Big Screen</h5>
-                  <h6>Smart Watch series 7</h6>
-                  <p>From $399 or $16.62/mo. for 24 mo. *</p>
+              <div
+                className="d-flex  align-items-center "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/");
+                }}
+              >
+                <div onClick={() => navigate("/product/caterogy/Cameras")}>
+                  <h6>Cameras</h6>
                 </div>
+                <img src="images/camera.jpg" alt="camera" />
               </div>
-            </div>
-            <div className="col-3">
-              <div className="famous-card position-relative">
-                <img
-                  className="img-fluid"
-                  src="images/famous-02.webp"
-                  alt="famous"
-                />
-                <div className="famous-content position-absolute text-dark">
-                  <h5>Studio Display</h5>
-                  <h6>600 nits of brightness.</h6>
-                  <p>27-inch 5K Retina display</p>
+              <div
+                className="d-flex  align-items-center  "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/Smart tv");
+                }}
+              >
+                <div>
+                  <h6>Smart tv</h6>
                 </div>
+                <img src="images/tv.jpg" alt="camera" />
               </div>
-            </div>
-            <div className="col-3">
-              <div className="famous-card position-relative">
-                <img
-                  className="img-fluid"
-                  src="images/famous-03.webp"
-                  alt="famous"
-                />
-                <div className="famous-content position-absolute text-dark">
-                  <h5>smartphones</h5>
-                  <h6>Smartphone 13 Pro.</h6>
-                  <p>
-                    Now in Green. From $999.00 or $41.62/mo. for 24 mo.
-                    Footnote*
-                  </p>
+              <div
+                className="d-flex  align-items-center  "
+                onClick={() => {
+                  navigate("/product/category/Smart watches");
+                }}
+              >
+                <div>
+                  <h6>Smart watches</h6>
                 </div>
+                <img
+                  style={{ width: "110px", height: "110px" }}
+                  src="images/watch.jpg"
+                  alt="camera"
+                />
               </div>
-            </div>
-            <div className="col-3">
-              <div className="famous-card position-relative">
-                <img
-                  className="img-fluid"
-                  src="images/famous-04.webp"
-                  alt="famous"
-                />
-                <div className="famous-content position-absolute text-dark">
-                  <h5>
-                    <div className="cms-banner-label">home speakers</div>
-                  </h5>
-                  <h6>Room-filling sound.</h6>
-                  <p>From $699 or $116.58/mo. for 12 mo.*</p>
+              <div
+                className="d-flex  align-items-center  "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/Keyboard");
+                }}
+              >
+                <div>
+                  <h6> Keyboard</h6>
                 </div>
+                <img
+                  style={{ width: "110px", height: "110px" }}
+                  src="images/keyboard.jpg"
+                  alt="camera"
+                />
+              </div>
+              <div
+                className="d-flex  align-items-center  "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/Mouse");
+                }}
+              >
+                <div>
+                  <h6>Mouse</h6>
+                </div>
+                <img
+                  style={{ width: "110px", height: "110px" }}
+                  src="images/mouse.jpg"
+                  alt="camera"
+                />
+              </div>
+              <div
+                className="d-flex  align-items-center  "
+                style={{ borderRight: "2px solid black" }}
+                onClick={() => {
+                  navigate("/product/category/Laptop");
+                }}
+              >
+                <div>
+                  <h6>Laptop</h6>
+                </div>
+                <img
+                  style={{ width: "110px", height: "110px" }}
+                  src="images/laptop.jpg"
+                  alt="camera"
+                />
+              </div>
+
+              <div
+                className="d-flex align-items-center border-bottom"
+                onClick={() => {
+                  navigate("/product/category/SmartPhone");
+                }}
+              >
+                <div>
+                  <h6>SmartPhone</h6>
+                </div>
+                <img
+                  style={{ width: "110px", height: "110px" }}
+                  src="images/smartphone.jpg"
+                  alt="camera"
+                />
               </div>
             </div>
           </div>
         </div>
-      </section> */}
+      </Container>
+
       <Container class1="home-wrapper-2 py-3 set-padding">
         <section className="speacial wrapper py-3 home-wrapper-2 set-padding">
           <div className="container-xx">

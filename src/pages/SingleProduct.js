@@ -4,7 +4,7 @@ import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import Color from "../components/Color";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiTwotoneDelete } from "react-icons/ai";
 import { useLocation, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,11 +13,14 @@ import {
   getAllProducts,
   addRating,
   resetState,
+  deleteRating,
+  updateRating,
 } from "../features/product/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { addToWishlist } from "../features/product/productSlice";
 import { CiEdit } from "react-icons/ci";
+import { Button, Modal } from "react-bootstrap";
 const SingleProduct = () => {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -93,6 +96,7 @@ const SingleProduct = () => {
   const [orderedProduct] = useState(true);
 
   const [popularProduct, setPopularProduct] = useState([]);
+  const [index, setindex] = useState("");
 
   useEffect(() => {
     let data = [];
@@ -104,11 +108,15 @@ const SingleProduct = () => {
       setPopularProduct(data);
     }
   }, [productState]);
-
+  const authState = useSelector((state) => state?.auth?.user);
   const [star, setStar] = useState(null);
   const [comment, setComment] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const addRatingToProduct = () => {
-    if (star === null) {
+    if (!authState) {
+      toast.error("Please login Account");
+    } else if (star === null) {
       toast.error("Please add star rating");
       return false;
     } else if (comment === null) {
@@ -127,9 +135,32 @@ const SingleProduct = () => {
     return false;
   };
 
+  const editRatingToProduct = () => {
+    if (star === null) {
+      toast.error("Please add star rating");
+      return false;
+    } else if (comment === null) {
+      toast.error("Please write review about the product");
+      return false;
+    } else {
+      dispatch(
+        updateRating({
+          star: star,
+          comment: comment,
+          index: index,
+          id: getProductId,
+        })
+      );
+      toast.success("update Rating Success");
+      setTimeout(() => {
+        dispatch(getAProduct(getProductId));
+        dispatch(resetState());
+      }, 300);
+    }
+    return false;
+  };
   const value = parseInt(productState?.totalrating);
 
-  //  modal edit comment
   return (
     <>
       <Meta title={"Product Name"} />
@@ -361,7 +392,7 @@ const SingleProduct = () => {
                   {productState &&
                     productState?.ratings?.map((item, index) => {
                       return (
-                        <div key={index} className="review ">
+                        <div key={index} className="review mt-2  ">
                           <div className="d-flex gap-10 align-items-center">
                             <h6 className="mb-0">{item?.title}</h6>
                             <ReactStars
@@ -376,13 +407,40 @@ const SingleProduct = () => {
                               activeColor="#ffd700"
                             />
                           </div>
-                          <p className="mt-3 text-dark">
+                          <p className="text-dark">
                             <p style={{ color: "blue" }}>
                               {item?.postedby[0]?.firstname}-{" "}
                               {item?.postedby[0]?.lastname}
                             </p>
                             {item?.comment}
                           </p>
+                          {authState._id == item?.postedby[0]._id && (
+                            <>
+                              <button
+                                className="mx-1 text-success bg-white mb-2"
+                                onClick={() => {
+                                  setindex(index);
+                                  setIsModalOpen(true);
+                                }}
+                              >
+                                <CiEdit />
+                              </button>
+                              <button
+                                className="mx-1 text-danger bg-white"
+                                onClick={() => {
+                                  dispatch(
+                                    deleteRating({
+                                      id: getProductId,
+                                      index: index,
+                                    })
+                                  );
+                                  dispatch(getAProduct(getProductId));
+                                }}
+                              >
+                                <AiTwotoneDelete />
+                              </button>
+                            </>
+                          )}
                         </div>
                       );
                     })}
@@ -402,6 +460,52 @@ const SingleProduct = () => {
           <ProductCard data={popularProduct} />
         </div>
       </Container>
+      <div>
+        <Modal show={isModalOpen}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Comment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <ReactStars
+                count={5}
+                size={24}
+                value={0}
+                edit={true}
+                activeColor="#ffd700"
+                onChange={(e) => {
+                  setStar(e);
+                }}
+              />
+            </div>
+            <textarea
+              name=""
+              id=""
+              className="w-100 form-control"
+              cols="30"
+              rows="4"
+              placeholder="New Comment"
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            ></textarea>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="primary"
+              onClick={() => {
+                editRatingToProduct();
+                setIsModalOpen(false);
+              }}
+            >
+              Edit
+            </Button>
+            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </>
   );
 };

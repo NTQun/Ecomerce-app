@@ -58,7 +58,31 @@ const updateQuantityCancel = async (data) => {
     return responce.data;
   }
 };
-
+const updateRate = async (data) => {
+  console.log(data);
+  const responce = await axios.put(
+    `${base_url}product/update-rating/${data.id}`,
+    {
+      index: data.index,
+      comment: data.comment,
+      star: data.star,
+    }
+  );
+  if (responce.data) {
+    return responce.data;
+  }
+};
+const deleteRate = async (data) => {
+  const responce = await axios.put(
+    `${base_url}product/delete-rating/${data.id}`,
+    {
+      index: data.index,
+    }
+  );
+  if (responce.data) {
+    return responce.data;
+  }
+};
 export const productService = {
   getProducts,
   addToWishlist,
@@ -66,4 +90,6 @@ export const productService = {
   rateProduct,
   updateQuantityOrder,
   updateQuantityCancel,
+  updateRate,
+  deleteRate,
 };
