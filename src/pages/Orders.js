@@ -36,14 +36,13 @@ const Orders = () => {
           <select value={status} onChange={handleChange}>
             <option value="All Order">All Order</option>
             <option value="Ordered">Ordered</option>
-
             <option value="Processed">Processed</option>
             <option value="Shipped">Shipped</option>
             <option value="Out For Delievery">Out For Delievery</option>
             <option value="Delivered">Delivered</option>
             <option value="Success Shipped"> Success Shipped</option>
-
             <option value="cancel">Cancel</option>
+            <option value="Delivery failed">Delivery failed</option>
           </select>
         </div>
         <div className="row ">

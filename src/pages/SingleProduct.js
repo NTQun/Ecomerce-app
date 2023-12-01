@@ -407,14 +407,14 @@ const SingleProduct = () => {
                               activeColor="#ffd700"
                             />
                           </div>
-                          <p className="text-dark">
+                          <p className="text-dark mx-3">
                             <p style={{ color: "blue" }}>
-                              {item?.postedby[0]?.firstname}-{" "}
-                              {item?.postedby[0]?.lastname}
+                              {item?.postedby[0]?.firstname}{" "}
+                              {item?.postedby[0]?.lastname}{" "}
                             </p>
                             {item?.comment}
                           </p>
-                          {authState._id == item?.postedby[0]._id && (
+                          {authState?._id == item?.postedby[0]?._id && (
                             <>
                               <button
                                 className="mx-1 text-success bg-white mb-2"

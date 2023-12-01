@@ -116,6 +116,7 @@ const Signup = () => {
                   label="Confirm Password"
                   id="pass"
                   name="confirmpassword"
+                  placeholder="Confirm Password"
                   onChng={formik.handleChange("confirmpassword")}
                   onBlr={formik.handleBlur("confirmpassword")}
                   val={formik.values.confirmpassword}

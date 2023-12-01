@@ -195,10 +195,10 @@ const Home = () => {
                 className="d-flex  align-items-center "
                 style={{ borderRight: "2px solid black" }}
                 onClick={() => {
-                  navigate("/product/category/");
+                  navigate("/product/category/Cameras");
                 }}
               >
-                <div onClick={() => navigate("/product/caterogy/Cameras")}>
+                <div>
                   <h6>Cameras</h6>
                 </div>
                 <img src="images/camera.jpg" alt="camera" />

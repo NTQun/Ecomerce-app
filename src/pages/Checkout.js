@@ -296,7 +296,6 @@ const Checkout = () => {
                     type="text"
                     placeholder="First Name"
                     name="firstName"
-                    //onChange={formik.handleChange("firstName")}
                     onChange={(e) => setFisrtName(e.target.value)}
                     defaultValue={authState?.firstname}
                     onBlur={formik.handleBlur("firstName")}
@@ -314,7 +313,6 @@ const Checkout = () => {
                     placeholder="Last Name"
                     name="lastName"
                     defaultValue={authState?.lastname}
-                    //onChange={formik.handleChange("lastName")}
                     onChange={(e) => setLastNamn(e.target.value)}
                     onBlur={formik.handleBlur("lastName")}
                     values={formik.values.lastName}
@@ -383,20 +381,21 @@ const Checkout = () => {
                       <option value="other">Other</option>
                     </select>
                   )}
-                  {address === "other" && (
-                    <div className="flex-grow-1">
-                      <label htmlFor="">Other Address</label>
+                  {address === "other" ||
+                    (addState?.length == 0 && (
+                      <div className="flex-grow-1">
+                        <label htmlFor="">New Address</label>
 
-                      <input
-                        type="text"
-                        placeholder="Other Address"
-                        name="address"
-                        onChange={(e) => setNewAddress(e.target.value)}
-                        values={formik.values.address}
-                        className="form-control"
-                      />
-                    </div>
-                  )}
+                        <input
+                          type="text"
+                          placeholder="Other Address"
+                          name="address"
+                          onChange={(e) => setNewAddress(e.target.value)}
+                          values={formik.values.address}
+                          className="form-control"
+                        />
+                      </div>
+                    ))}
                 </div>
                 <div className="flex-grow-1">
                   <label htmlFor="">Checkout type</label>
