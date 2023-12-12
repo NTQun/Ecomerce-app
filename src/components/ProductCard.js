@@ -51,7 +51,7 @@ const ProductCard = (props) => {
                   style={{ maxHeight: "300px", maxWidth: "300px" }}
                 />
               </Link>
-              <div className="product-details mt-2">
+              <div className="product-details pt-2">
                 <h6 className="brand">{item?.brand}</h6>
                 <h5 className="product-title">{item.title}</h5>
                 <ReactStars

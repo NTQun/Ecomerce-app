@@ -42,7 +42,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth);
   useEffect(() => {
-    if (authState.created !== null && authState.isError === false) {
+    if (authState.createdUser !== null && authState.isSuccess == true) {
       navigate("/login");
     }
   }, [authState]);
